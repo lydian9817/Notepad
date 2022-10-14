@@ -1,5 +1,6 @@
 package com.example.notepad.ui.home
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -17,6 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.notepad.ui.theme.NotepadTheme
 
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")//evita el error de padding
 @Composable
 fun HomeScreen() {
     Scaffold(
