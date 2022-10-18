@@ -19,13 +19,27 @@ fun NotepadApp() {
     ) {
         composable(route = HomeScreen.route) {
             HomeScreen(
-                onClickAddNote = { navController.navigateSingleTopTo(EditScreen.route) }
+                onClickAddNote = {
+                    navController.navigate(EditScreen.route) {
+                        launchSingleTop = true
+                    }
+                }
             )
         }
-        composable(route = EditScreen.route) { EditScreen() }
+        composable(route = EditScreen.route) {
+            EditScreen(
+                onClickSaveNote = {
+                    navController.navigate(HomeScreen.route) {
+                        launchSingleTop = true
+                        popUpTo(HomeScreen.route)
+                    }
+                }
+            )
+        }
     }
 }
 
-
+/*
 fun NavHostController.navigateSingleTopTo(route: String) =
     this.navigate(route) { launchSingleTop = true } //launch a single copy of the destination
+ */
