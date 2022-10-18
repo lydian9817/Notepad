@@ -13,17 +13,16 @@ import androidx.compose.material.icons.rounded.Menu
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.notepad.ui.theme.NotepadTheme
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")//evita el error de padding
 @Composable
-fun HomeScreen() {
+fun HomeScreen(onClickAddNote: () -> Unit = {}) {
     Scaffold(
         topBar = { AppBar() },
-        floatingActionButton = { HomeFloatingActionButton() }
+        floatingActionButton = { HomeFloatingActionButton( onClickAdd = onClickAddNote ) }
     ) {
         EmptyNoteListScreen()
     }
@@ -50,10 +49,11 @@ fun AppBar() {
 }
 
 @Composable
-fun HomeFloatingActionButton() {
+fun HomeFloatingActionButton(onClickAdd: () -> Unit) {
     FloatingActionButton(
         shape = CircleShape,
-        onClick = { /*TODO*/ }) {
+        onClick = onClickAdd
+    ) {
         Icon(imageVector = Icons.Rounded.Add, contentDescription = "Add Note")
     }
 }
