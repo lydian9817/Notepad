@@ -1,7 +1,7 @@
 package com.example.notepad.data.database
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
-import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface NoteDao {
@@ -16,8 +16,8 @@ interface NoteDao {
     suspend fun delete(item: Note)
 
     @Query("SELECT * from note_table WHERE id = :id")
-    fun getNote(id: Int): Flow<Note>
+    fun getNote(id: Int): LiveData<Note>
 
     @Query("SELECT * from note_table ORDER BY id ASC")
-    fun getNotes(): Flow<List<Note>>
+    fun getNotes(): LiveData<List<Note>>
 }
