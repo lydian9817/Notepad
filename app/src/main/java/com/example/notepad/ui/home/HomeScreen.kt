@@ -15,11 +15,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.notepad.ui.NotepadViewModel
 import com.example.notepad.ui.theme.NotepadTheme
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")//evita el error de padding
 @Composable
-fun HomeScreen(onClickAddNote: () -> Unit = {}) {
+fun HomeScreen(onClickAddNote: () -> Unit = {}, notepadViewModel: NotepadViewModel) {
     Scaffold(
         topBar = { AppBar() },
         floatingActionButton = { HomeFloatingActionButton( onClickAdd = onClickAddNote ) }
@@ -77,7 +78,7 @@ fun NoteListScreen() {
     //TODO
 }
 
-
+/*
 @Preview(showSystemUi = true)
 @Composable
 fun HomeScreenPreview() {
@@ -85,3 +86,4 @@ fun HomeScreenPreview() {
         HomeScreen()
     }
 }
+ */

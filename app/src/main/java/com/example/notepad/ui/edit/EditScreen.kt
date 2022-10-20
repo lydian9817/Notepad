@@ -9,11 +9,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.notepad.ui.NotepadViewModel
 import com.example.notepad.ui.notes.TextNoteEdit
 import com.example.notepad.ui.theme.NotepadTheme
 
 @Composable
-fun EditScreen(onClickSaveNote: () -> Unit = {}) {
+fun EditScreen(onClickSaveNote: () -> Unit = {}, notepadViewModel: NotepadViewModel) {
     Column {
         TextNoteEdit()
         Spacer(modifier = Modifier.height(30.dp))
@@ -28,6 +29,7 @@ fun SaveButton(onClickSave: () -> Unit) {
     }
 }
 
+/*
 @Preview
 @Composable
 fun EditScreenPreview() {
@@ -35,3 +37,4 @@ fun EditScreenPreview() {
         EditScreen()
     }
 }
+ */

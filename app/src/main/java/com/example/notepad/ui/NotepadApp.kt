@@ -1,6 +1,8 @@
 package com.example.notepad.ui
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -18,22 +20,32 @@ fun NotepadApp() {
         startDestination = HomeScreen.route
     ) {
         composable(route = HomeScreen.route) {
+            val notepadViewModel = hiltViewModel<NotepadViewModel>() //viewModel
             HomeScreen(
                 onClickAddNote = {
                     navController.navigate(EditScreen.route) {
                         launchSingleTop = true
                     }
-                }
+                },
+                notepadViewModel = notepadViewModel
             )
         }
         composable(route = EditScreen.route) {
+            //assign parent's (HomeScreen's) viewModel
+            val parentEntry = remember(it) {
+                navController.getBackStackEntry(HomeScreen.route)
+            }
+            val parentViewModel = hiltViewModel<NotepadViewModel>(
+                parentEntry
+            )
             EditScreen(
                 onClickSaveNote = {
                     navController.navigate(HomeScreen.route) {
                         launchSingleTop = true
                         popUpTo(HomeScreen.route)
                     }
-                }
+                },
+                notepadViewModel = parentViewModel
             )
         }
     }
