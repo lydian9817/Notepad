@@ -25,7 +25,7 @@ fun HomeScreen(onClickAddNote: () -> Unit = {}, notepadViewModel: NotepadViewMod
         topBar = { AppBar() },
         floatingActionButton = { HomeFloatingActionButton( onClickAdd = onClickAddNote ) }
     ) {
-        EmptyNoteListScreen()
+        EmptyNoteList()
     }
 
 }
@@ -60,7 +60,7 @@ fun HomeFloatingActionButton(onClickAdd: () -> Unit) {
 }
 
 @Composable
-fun EmptyNoteListScreen() {
+fun EmptyNoteList() {
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
@@ -74,7 +74,7 @@ fun EmptyNoteListScreen() {
 }
 
 @Composable
-fun NoteListScreen() {
+fun NoteList() {
     //TODO
 }
 
