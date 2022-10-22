@@ -71,8 +71,8 @@ class NotepadViewModel @Inject constructor (
     //-----------------
 
     //check if the list is empty
-    fun isListEmpty(): Boolean? {
-        return allNotes.value?.isEmpty()
+    fun isListEmpty(): Boolean {
+        return allNotes.value.isNullOrEmpty()
     }
     //-----------------
 
