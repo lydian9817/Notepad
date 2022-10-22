@@ -13,21 +13,25 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.notepad.ui.theme.NotepadTheme
 
 @Composable
-fun TextNoteEdit() {
+fun TextNoteEdit(
+    title: String,
+    onTitleChange: (String) -> Unit,
+    content: String,
+    onContentChange: (String) -> Unit
+) {
     Column {
-        Title()
+        Title(title, onTitleChange)
         Divider()
-        TextNoteContent()
+        TextNoteContent(content, onContentChange)
     }
 
 }
 
 @Composable
-fun Title() {
-    var title by rememberSaveable { mutableStateOf("") }
+fun Title(title: String, onTitleChange: (String) -> Unit) {
     TextField(
         value = title,
-        onValueChange = { title = it },
+        onValueChange = onTitleChange,
         label = { Text("Title") },
         singleLine = true,
         placeholder = { Text("Note title") }
@@ -35,15 +39,15 @@ fun Title() {
 }
 
 @Composable
-fun TextNoteContent() {
-    var text by rememberSaveable { mutableStateOf("") }
+fun TextNoteContent(content: String, onContentChange: (String) -> Unit) {
     TextField(
-        value = text,
-        onValueChange = { text = it },
+        value = content,
+        onValueChange = onContentChange,
         placeholder = { Text("Start typing!") }
     )
 }
 
+/*
 @Preview
 @Composable
 fun TextNoteEditPreview() {
@@ -51,5 +55,7 @@ fun TextNoteEditPreview() {
         TextNoteEdit()
     }
 }
+
+ */
 
 

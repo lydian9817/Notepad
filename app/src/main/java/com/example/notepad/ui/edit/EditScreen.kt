@@ -5,7 +5,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.material.Button
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -15,16 +16,24 @@ import com.example.notepad.ui.theme.NotepadTheme
 
 @Composable
 fun EditScreen(onClickSaveNote: () -> Unit = {}, notepadViewModel: NotepadViewModel) {
+    var noteTitle by rememberSaveable { mutableStateOf("") }
+    var noteContent by rememberSaveable { mutableStateOf("") }
+    val isNoteValid = notepadViewModel.isNoteValid(noteTitle, noteContent)
+
     Column {
-        TextNoteEdit()
+        TextNoteEdit(
+            title = noteTitle,
+            onTitleChange = { noteTitle = it },
+            content = noteContent,
+            onContentChange = { noteContent = it })
         Spacer(modifier = Modifier.height(30.dp))
-        SaveButton(onClickSave = onClickSaveNote)
+        SaveButton(onClickSave = onClickSaveNote, isEnabled = isNoteValid)
     }
 }
 
 @Composable
-fun SaveButton(onClickSave: () -> Unit) {
-    Button(onClick = onClickSave) {
+fun SaveButton(onClickSave: () -> Unit, isEnabled: Boolean) {
+    Button(onClick = onClickSave, enabled = isEnabled) {
         Text("Save Note")
     }
 }
