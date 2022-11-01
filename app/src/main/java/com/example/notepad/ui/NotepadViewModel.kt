@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class NotepadViewModel @Inject constructor (
+class NotepadViewModel @Inject constructor(
     private val roomRepository: RoomRepository
 ) : ViewModel() {
 
@@ -38,10 +38,10 @@ class NotepadViewModel @Inject constructor (
     var noteContent by mutableStateOf("")
         private set
 
-    fun updateNoteTitle(updatedTitle: String){
+    fun updateNoteTitle(updatedTitle: String) {
         noteTitle = updatedTitle
     }
-    fun updateNoteContent(updatedContent: String){
+    fun updateNoteContent(updatedContent: String) {
         noteContent = updatedContent
     }
     //----------------------------
@@ -54,13 +54,17 @@ class NotepadViewModel @Inject constructor (
         }
     }
 
-    private fun getNewNoteEntry(noteId: Int, noteTitle: String, noteContent: String): Note {
-        return Note(noteId ,noteTitle, noteContent)
+    private fun getNewNoteEntry(noteTitle: String, noteContent: String): Note {
+        return Note(
+            noteTitle = noteTitle,
+            noteContent = noteContent
+        )
     }
 
-    fun addNewNote(noteId: Int, noteTitle: String, noteContent: String) {
-        val newNote = getNewNoteEntry(noteId, noteTitle, noteContent)
+    fun addNewNote(noteTitle: String, noteContent: String) {
+        val newNote = getNewNoteEntry(noteTitle, noteContent)
         insertNote(newNote)
+        resetStateValues()
     }
     //-----------------
 
@@ -72,7 +76,11 @@ class NotepadViewModel @Inject constructor (
     }
 
     private fun getUpdatedNoteEntry(noteId: Int, noteTitle: String, noteContent: String): Note {
-    return Note(noteId, noteTitle, noteContent)
+        return Note(
+            id = noteId,
+            noteTitle = noteTitle,
+            noteContent = noteContent
+        )
     }
 
     fun updateNote(noteId: Int, noteTitle: String, noteContent: String) {
@@ -101,8 +109,12 @@ class NotepadViewModel @Inject constructor (
     }
     //-----------------
 
+    private fun resetStateValues() {
+        noteTitle = ""
+        noteContent= ""
+    }
 }
- /*
+/*
 private val _noteTitle = MutableLiveData<String>()
 val noteTitle: LiveData<String> = _noteTitle
 
@@ -113,8 +125,8 @@ private val _saveEnabled = MutableLiveData<Boolean>()
 val saveEnabled: LiveData<Boolean> = _saveEnabled
 
 private fun onNoteChanged(noteTitle: String, noteContent: String) {
-    _noteTitle.value = noteTitle
-    _noteContent.value = noteContent
-    _saveEnabled.value = _noteTitle.value != "" && _noteContent.value != ""
+   _noteTitle.value = noteTitle
+   _noteContent.value = noteContent
+   _saveEnabled.value = _noteTitle.value != "" && _noteContent.value != ""
 }
- */
+*/

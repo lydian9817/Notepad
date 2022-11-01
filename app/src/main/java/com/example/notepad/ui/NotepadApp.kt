@@ -45,7 +45,7 @@ fun NotepadApp() {
                         popUpTo(HomeScreen.route)
                     }
                     //saves the note
-                    parentViewModel.addNewNote(0,parentViewModel.noteTitle, parentViewModel.noteContent)
+                    parentViewModel.addNewNote(parentViewModel.noteTitle, parentViewModel.noteContent)
                 },
                 notepadViewModel = parentViewModel
             )
