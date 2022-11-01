@@ -21,18 +21,20 @@ import com.example.notepad.ui.theme.NotepadTheme
 
 @Composable
 fun EditScreen(onClickSaveNote: () -> Unit = {}, notepadViewModel: NotepadViewModel) {
-    var noteTitle by rememberSaveable { mutableStateOf("") }
-    var noteContent by rememberSaveable { mutableStateOf("") }
-    val isNoteValid = notepadViewModel.isNoteValid(noteTitle, noteContent)
+    //var noteTitle by rememberSaveable { mutableStateOf("") }
+    //var noteContent by rememberSaveable { mutableStateOf("") }
+    val notepadUiState by notepadViewModel.uiState.collectAsState()
+    val isNoteValid = notepadViewModel.isNoteValid(notepadViewModel.noteTitle, notepadViewModel.noteContent)
 
 
     Column {
         IconRow()
         TextNoteEdit(
-            title = noteTitle,
-            onTitleChange = { noteTitle = it },
-            content = noteContent,
-            onContentChange = { noteContent = it })
+            title = notepadViewModel.noteTitle,
+            onTitleChange = { notepadViewModel.updateNoteTitle(it) },
+            content = notepadViewModel.noteContent,
+            onContentChange = { notepadViewModel.updateNoteContent(it)}
+        )
         Spacer(modifier = Modifier.height(30.dp))
         SaveButton(onClickSave = onClickSaveNote, isEnabled = isNoteValid)
     }

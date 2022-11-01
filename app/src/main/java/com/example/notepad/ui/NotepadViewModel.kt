@@ -1,11 +1,18 @@
 package com.example.notepad.ui
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.notepad.data.database.Note
 import com.example.notepad.data.database.RoomRepository
+import com.example.notepad.ui.state.NotepadUiSate
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -21,6 +28,24 @@ class NotepadViewModel @Inject constructor (
     fun retrieveNote(id: Int): LiveData<Note> {
         return roomRepository.getNote(id)
     }
+
+    // Notepad UI state----------
+    private val _uiState = MutableStateFlow(NotepadUiSate())
+    val uiState: StateFlow<NotepadUiSate> = _uiState.asStateFlow()
+
+    var noteTitle by mutableStateOf("")
+        private set
+    var noteContent by mutableStateOf("")
+        private set
+
+    fun updateNoteTitle(updatedTitle: String){
+        noteTitle = updatedTitle
+    }
+    fun updateNoteContent(updatedContent: String){
+        noteContent = updatedContent
+    }
+    //----------------------------
+
 
     //add note-------
     private fun insertNote(note: Note) {
