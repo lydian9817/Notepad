@@ -7,17 +7,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Done
-import androidx.compose.material.icons.rounded.Menu
-import androidx.compose.runtime.*
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.notepad.ui.NotepadViewModel
-import com.example.notepad.ui.home.AppBar
 import com.example.notepad.ui.notes.TextNoteEdit
-import com.example.notepad.ui.theme.NotepadTheme
 
 @Composable
 fun EditScreen(onClickSaveNote: () -> Unit = {}, notepadViewModel: NotepadViewModel) {
