@@ -7,9 +7,9 @@ interface NotepadDestination {
 
 /* Destinations */
 object HomeScreen : NotepadDestination {
-    override val route = "home screen"
+    override val route = "home_screen"
 }
 
 object EditScreen : NotepadDestination {
-    override val route = "edit screen"
+    override val route = "edit_screen"
 }

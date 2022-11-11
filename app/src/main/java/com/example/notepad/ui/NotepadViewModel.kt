@@ -1,5 +1,6 @@
 package com.example.notepad.ui
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -21,22 +22,33 @@ class NotepadViewModel @Inject constructor(
     private val roomRepository: RoomRepository
 ) : ViewModel() {
 
+    var noteTitle by mutableStateOf("")
+        private set
+    var noteContent by mutableStateOf("")
+        private set
+    init {
+        resetStateValues()
+    }
     //get all notes
     val allNotes: LiveData<List<Note>> = roomRepository.getNotes()
 
     //get one note
-    fun retrieveNote(id: Int): LiveData<Note> {
+
+    private fun retrieveNote(id: Int): LiveData<Note> {
         return roomRepository.getNote(id)
+    }
+
+    fun noteSelected (noteId: Int?){
+        val note = retrieveNote(noteId!!)
+        noteTitle = note.value?.noteTitle.toString()
+        noteContent = note.value?.noteContent.toString()
     }
 
     // Notepad UI state----------
     private val _uiState = MutableStateFlow(NotepadUiSate())
     val uiState: StateFlow<NotepadUiSate> = _uiState.asStateFlow()
 
-    var noteTitle by mutableStateOf("")
-        private set
-    var noteContent by mutableStateOf("")
-        private set
+
 
     fun updateNoteTitle(updatedTitle: String) {
         noteTitle = updatedTitle
@@ -45,7 +57,6 @@ class NotepadViewModel @Inject constructor(
         noteContent = updatedContent
     }
     //----------------------------
-
 
     //add note-------
     private fun insertNote(note: Note) {
