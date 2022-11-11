@@ -1,5 +1,6 @@
 package com.example.notepad.ui.edit
 
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
@@ -16,12 +17,22 @@ import com.example.notepad.ui.NotepadViewModel
 import com.example.notepad.ui.notes.TextNoteEdit
 
 @Composable
-fun EditScreen(onClickSaveNote: () -> Unit = {}, notepadViewModel: NotepadViewModel) {
+fun EditScreen(onClickSaveNote: () -> Unit = {}, selectedNoteId: String?, notepadViewModel: NotepadViewModel) {
     //var noteTitle by rememberSaveable { mutableStateOf("") }
     //var noteContent by rememberSaveable { mutableStateOf("") }
     val notepadUiState by notepadViewModel.uiState.collectAsState()
     val isNoteValid = notepadViewModel.isNoteValid(notepadViewModel.noteTitle, notepadViewModel.noteContent)
+    /*if (selectedNoteId != "noteId" && selectedNoteId != null) {
+        if (selectedNoteId.toInt() > 0) {
+            notepadViewModel.noteSelected(selectedNoteId.toInt())
+        }
+    }*/
+    Log.i("selected id", "noteId es $selectedNoteId")
 
+    if (selectedNoteId != "noteId" && selectedNoteId != null) {
+        Log.i("to int", "es ${selectedNoteId.toInt()}")
+        notepadViewModel.noteSelected(selectedNoteId.toInt())
+    }
 
     Column {
         IconRow()
