@@ -120,7 +120,7 @@ class NotepadViewModel @Inject constructor(
     }
     //-----------------
 
-    private fun resetStateValues() {
+    fun resetStateValues() {
         noteTitle = ""
         noteContent= ""
     }
