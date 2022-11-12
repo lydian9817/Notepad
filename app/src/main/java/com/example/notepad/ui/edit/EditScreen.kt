@@ -18,9 +18,7 @@ import com.example.notepad.ui.notes.TextNoteEdit
 
 @Composable
 fun EditScreen(onClickSaveNote: () -> Unit = {}, selectedNoteId: String?, notepadViewModel: NotepadViewModel) {
-    //var noteTitle by rememberSaveable { mutableStateOf("") }
-    //var noteContent by rememberSaveable { mutableStateOf("") }
-    val notepadUiState by notepadViewModel.uiState.collectAsState()
+
     val isNoteValid = notepadViewModel.isNoteValid(notepadViewModel.noteTitle, notepadViewModel.noteContent)
     /*if (selectedNoteId != "noteId" && selectedNoteId != null) {
         if (selectedNoteId.toInt() > 0) {
