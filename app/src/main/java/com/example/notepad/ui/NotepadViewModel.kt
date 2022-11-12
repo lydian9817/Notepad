@@ -125,19 +125,3 @@ class NotepadViewModel @Inject constructor(
         noteContent= ""
     }
 }
-/*
-private val _noteTitle = MutableLiveData<String>()
-val noteTitle: LiveData<String> = _noteTitle
-
-private val _noteContent = MutableLiveData<String>()
-val noteContent: LiveData<String> = _noteContent
-
-private val _saveEnabled = MutableLiveData<Boolean>()
-val saveEnabled: LiveData<Boolean> = _saveEnabled
-
-private fun onNoteChanged(noteTitle: String, noteContent: String) {
-   _noteTitle.value = noteTitle
-   _noteContent.value = noteContent
-   _saveEnabled.value = _noteTitle.value != "" && _noteContent.value != ""
-}
-*/
