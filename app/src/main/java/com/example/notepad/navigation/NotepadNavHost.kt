@@ -21,6 +21,7 @@ fun NotepadNavHost(navController: NavHostController) {
     ) {
         composable(route = HomeScreen.route) {
             val notepadViewModel = hiltViewModel<NotepadViewModel>() //viewModel
+            notepadViewModel.resetStateValues()
             HomeScreen(
                 onClickAddNote = {
                     navController.navigate(EditScreen.route + "/noteId") {
