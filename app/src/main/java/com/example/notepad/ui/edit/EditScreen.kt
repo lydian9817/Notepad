@@ -20,11 +20,7 @@ import com.example.notepad.ui.notes.TextNoteEdit
 fun EditScreen(onClickSaveNote: () -> Unit = {}, selectedNoteId: String?, notepadViewModel: NotepadViewModel) {
 
     val isNoteValid = notepadViewModel.isNoteValid(notepadViewModel.noteTitle, notepadViewModel.noteContent)
-    /*if (selectedNoteId != "noteId" && selectedNoteId != null) {
-        if (selectedNoteId.toInt() > 0) {
-            notepadViewModel.noteSelected(selectedNoteId.toInt())
-        }
-    }*/
+
     Log.i("selected id", "noteId es $selectedNoteId")
 
     if (selectedNoteId != "noteId" && selectedNoteId != null) {
