@@ -1,9 +1,6 @@
 package com.example.notepad.ui
 
-import android.util.Log
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -34,12 +31,11 @@ class NotepadViewModel @Inject constructor(
 
     //get one note
 
-    private fun retrieveNote(id: Int): LiveData<Note> {
+    fun retrieveNote(id: Int): LiveData<Note> {
         return roomRepository.getNote(id)
     }
 
-    fun noteSelected (noteId: Int?){
-        val note = retrieveNote(noteId!!)
+    fun updateStates (note: MutableState<Note?>){
         noteTitle = note.value?.noteTitle.toString()
         noteContent = note.value?.noteContent.toString()
     }

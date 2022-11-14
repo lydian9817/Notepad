@@ -9,10 +9,11 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Done
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.example.notepad.data.database.Note
 import com.example.notepad.ui.NotepadViewModel
 import com.example.notepad.ui.notes.TextNoteEdit
 
@@ -25,7 +26,8 @@ fun EditScreen(onClickSaveNote: () -> Unit = {}, selectedNoteId: String?, notepa
 
     if (selectedNoteId != "noteId" && selectedNoteId != null) {
         Log.i("to int", "es ${selectedNoteId.toInt()}")
-        notepadViewModel.noteSelected(selectedNoteId.toInt())
+        val retrievedNote = notepadViewModel.retrieveNote(selectedNoteId.toInt()).observeAsState()
+        notepadViewModel.updateStates(retrievedNote as MutableState<Note?>)
     }
 
     Column {
