@@ -18,9 +18,14 @@ import com.example.notepad.ui.NotepadViewModel
 import com.example.notepad.ui.notes.TextNoteEdit
 
 @Composable
-fun EditScreen(onClickSaveNote: () -> Unit = {}, selectedNoteId: String?, notepadViewModel: NotepadViewModel) {
+fun EditScreen(
+    onClickSaveNote: () -> Unit = {},
+    selectedNoteId: String?,
+    notepadViewModel: NotepadViewModel
+) {
 
-    val isNoteValid = notepadViewModel.isNoteValid(notepadViewModel.noteTitle, notepadViewModel.noteContent)
+    val isNoteValid =
+        notepadViewModel.isNoteValid(notepadViewModel.noteTitle, notepadViewModel.noteContent)
 
     Log.i("selected id", "noteId es $selectedNoteId")
 
@@ -36,7 +41,7 @@ fun EditScreen(onClickSaveNote: () -> Unit = {}, selectedNoteId: String?, notepa
             title = notepadViewModel.noteTitle,
             onTitleChange = { notepadViewModel.updateNoteTitle(it) },
             content = notepadViewModel.noteContent,
-            onContentChange = { notepadViewModel.updateNoteContent(it)}
+            onContentChange = { notepadViewModel.updateNoteContent(it) }
         )
         Spacer(modifier = Modifier.height(30.dp))
         SaveButton(onClickSave = onClickSaveNote, isEnabled = isNoteValid)
