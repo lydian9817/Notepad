@@ -1,4 +1,4 @@
-package com.example.notepad.ui.state
+package com.example.notepad.presentation.state
 
 data class NotepadUiSate(
     val noteTitle: String = "",

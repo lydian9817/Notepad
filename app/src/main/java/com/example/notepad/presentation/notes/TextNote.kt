@@ -1,4 +1,4 @@
-package com.example.notepad.ui.notes
+package com.example.notepad.presentation.notes
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Divider

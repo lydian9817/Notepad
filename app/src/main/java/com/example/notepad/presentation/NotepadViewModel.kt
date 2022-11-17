@@ -1,4 +1,4 @@
-package com.example.notepad.ui
+package com.example.notepad.presentation
 
 import androidx.compose.runtime.*
 import androidx.lifecycle.LiveData
@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.notepad.data.database.Note
 import com.example.notepad.data.database.RoomRepository
-import com.example.notepad.ui.state.NotepadUiSate
+import com.example.notepad.presentation.state.NotepadUiSate
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

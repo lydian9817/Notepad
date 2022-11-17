@@ -1,4 +1,4 @@
-package com.example.notepad.ui.home
+package com.example.notepad.presentation.home
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.clickable
@@ -19,7 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.notepad.data.database.Note
-import com.example.notepad.ui.NotepadViewModel
+import com.example.notepad.presentation.NotepadViewModel
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")//evita el error de padding
 @Composable

@@ -1,4 +1,4 @@
-package com.example.notepad.ui
+package com.example.notepad.presentation
 
 import android.util.Log
 import androidx.compose.runtime.Composable
@@ -13,8 +13,8 @@ import androidx.navigation.navArgument
 import com.example.notepad.navigation.EditScreen
 import com.example.notepad.navigation.HomeScreen
 import com.example.notepad.navigation.NotepadNavHost
-import com.example.notepad.ui.edit.EditScreen
-import com.example.notepad.ui.home.HomeScreen
+import com.example.notepad.presentation.edit.EditScreen
+import com.example.notepad.presentation.home.HomeScreen
 
 @Composable
 fun NotepadApp() {

@@ -1,9 +1,8 @@
-package com.example.notepad
+package com.example.notepad.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import com.example.notepad.ui.NotepadApp
 import com.example.notepad.ui.theme.NotepadTheme
 import dagger.hilt.android.AndroidEntryPoint
 

@@ -1,4 +1,4 @@
-package com.example.notepad.ui.edit
+package com.example.notepad.presentation.edit
 
 import android.util.Log
 import androidx.compose.foundation.layout.Column
@@ -14,8 +14,8 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.notepad.data.database.Note
-import com.example.notepad.ui.NotepadViewModel
-import com.example.notepad.ui.notes.TextNoteEdit
+import com.example.notepad.presentation.NotepadViewModel
+import com.example.notepad.presentation.notes.TextNoteEdit
 
 @Composable
 fun EditScreen(
