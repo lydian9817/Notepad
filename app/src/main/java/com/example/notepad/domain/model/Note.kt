@@ -1,4 +1,4 @@
-package com.example.notepad.data.database
+package com.example.notepad.domain.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

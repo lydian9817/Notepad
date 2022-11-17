@@ -2,7 +2,7 @@ package com.example.notepad.di
 
 import android.content.Context
 import androidx.room.Room
-import com.example.notepad.data.database.NoteDatabase
+import com.example.notepad.data.data_source.NoteDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

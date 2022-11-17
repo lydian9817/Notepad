@@ -4,8 +4,8 @@ import androidx.compose.runtime.*
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.notepad.data.database.Note
-import com.example.notepad.data.database.RoomRepository
+import com.example.notepad.domain.model.Note
+import com.example.notepad.domain.repository.NoteRepository
 import com.example.notepad.presentation.state.NotepadUiSate
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,7 +16,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class NotepadViewModel @Inject constructor(
-    private val roomRepository: RoomRepository
+    private val roomNoteRepository: NoteRepository
 ) : ViewModel() {
 
     var noteTitle by mutableStateOf("")
@@ -27,12 +27,12 @@ class NotepadViewModel @Inject constructor(
         resetStateValues()
     }
     //get all notes
-    val allNotes: LiveData<List<Note>> = roomRepository.getNotes()
+    val allNotes: LiveData<List<Note>> = roomNoteRepository.getNotes()
 
     //get one note
 
     fun retrieveNote(id: Int): LiveData<Note> {
-        return roomRepository.getNote(id)
+        return roomNoteRepository.getNoteById(id)
     }
 
     fun updateStates (note: MutableState<Note?>){
@@ -57,7 +57,7 @@ class NotepadViewModel @Inject constructor(
     //add note-------
     private fun insertNote(note: Note) {
         viewModelScope.launch {
-            roomRepository.insertNote(note)
+            roomNoteRepository.insertNote(note)
         }
     }
 
@@ -78,7 +78,7 @@ class NotepadViewModel @Inject constructor(
     //update note------
     private fun updateNote(note: Note) {
         viewModelScope.launch {
-            roomRepository.updateNote(note)
+            roomNoteRepository.updateNote(note)
         }
     }
 
@@ -99,7 +99,7 @@ class NotepadViewModel @Inject constructor(
     //delete note------
     fun deleteNote(note: Note) {
         viewModelScope.launch {
-            roomRepository.deleteNote(note)
+            roomNoteRepository.deleteNote(note)
         }
     }
     //-----------------

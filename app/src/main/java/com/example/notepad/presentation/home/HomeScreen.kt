@@ -18,7 +18,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.notepad.data.database.Note
+import com.example.notepad.domain.model.Note
 import com.example.notepad.presentation.NotepadViewModel
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")//evita el error de padding
