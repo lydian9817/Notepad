@@ -2,6 +2,7 @@ package com.example.notepad.data.database
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface NoteDao {
@@ -19,5 +20,5 @@ interface NoteDao {
     fun getNote(id: Int): LiveData<Note>
 
     @Query("SELECT * from note_table ORDER BY id ASC")
-    fun getNotes(): LiveData<List<Note>>
+    fun getNotes(): Flow<List<Note>>
 }

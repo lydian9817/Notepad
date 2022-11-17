@@ -22,5 +22,5 @@ class RoomRepository @Inject constructor(private val noteDao: NoteDao) {
         return noteDao.getNote(id)
     }
 
-    fun getNotes(): LiveData<List<Note>> = noteDao.getNotes()
+    fun getNotes(): Flow<List<Note>> = noteDao.getNotes()
 }

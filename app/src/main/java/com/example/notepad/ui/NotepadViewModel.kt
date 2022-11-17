@@ -6,11 +6,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.notepad.data.database.Note
 import com.example.notepad.data.database.RoomRepository
-import com.example.notepad.ui.state.NotepadUiSate
+import com.example.notepad.ui.home.HomeState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -19,15 +19,25 @@ class NotepadViewModel @Inject constructor(
     private val roomRepository: RoomRepository
 ) : ViewModel() {
 
+    private val _state = mutableStateOf(HomeState())
+    val state: State<HomeState> = _state
+
+    init {
+        roomRepository.getNotes().onEach { notes ->
+            _state.value = state.value.copy(
+                notes = notes
+            )
+        }.launchIn(viewModelScope)
+    }
+
+
     var noteTitle by mutableStateOf("")
         private set
     var noteContent by mutableStateOf("")
         private set
-    init {
-        resetStateValues()
-    }
+
     //get all notes
-    val allNotes: LiveData<List<Note>> = roomRepository.getNotes()
+    val allNotes: Flow<List<Note>> = roomRepository.getNotes()
 
     //get one note
 
@@ -39,12 +49,6 @@ class NotepadViewModel @Inject constructor(
         noteTitle = note.value?.noteTitle.toString()
         noteContent = note.value?.noteContent.toString()
     }
-
-    // Notepad UI state----------
-    private val _uiState = MutableStateFlow(NotepadUiSate())
-    val uiState: StateFlow<NotepadUiSate> = _uiState.asStateFlow()
-
-
 
     fun updateNoteTitle(updatedTitle: String) {
         noteTitle = updatedTitle
@@ -112,7 +116,7 @@ class NotepadViewModel @Inject constructor(
 
     //check if the list is empty
     fun isListEmpty(): Boolean {
-        return allNotes.value.isNullOrEmpty()
+        return _state.value.notes.isEmpty()
     }
     //-----------------
 

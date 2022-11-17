@@ -28,7 +28,7 @@ fun HomeScreen(
     onNoteClick: (String) -> Unit = {},
     notepadViewModel: NotepadViewModel
 ) {
-    val notes = notepadViewModel.allNotes.observeAsState(listOf())
+    //val notes = notepadViewModel.allNotes.observeAsState(listOf())
     val isListEmpty = notepadViewModel.isListEmpty()
     Scaffold(
         topBar = { AppBar() },
@@ -38,7 +38,7 @@ fun HomeScreen(
         if (isListEmpty) {
             EmptyNoteList()
         } else {
-            NoteList(notes = notes, onNoteClick = onNoteClick)
+            NoteList(notes = notepadViewModel.state.value.notes, onNoteClick = onNoteClick)
         }
 
     }
@@ -89,12 +89,14 @@ fun EmptyNoteList() {
 }
 
 @Composable
-fun NoteList(notes: State<List<Note>?>, onNoteClick: (String) -> Unit = {}) {
+fun NoteList(notes: List<Note>?, onNoteClick: (String) -> Unit = {}) {
         LazyColumn {
-            notes.value?.size?.let {
-                items(it) {
-                    Note(note = notes.value!![it], onNoteClick = onNoteClick)
+            if (notes != null) {
+                notes.size.let {
+                    items(it) {
+                        Note(note = notes[it], onNoteClick = onNoteClick)
 
+                    }
                 }
             }
         }
