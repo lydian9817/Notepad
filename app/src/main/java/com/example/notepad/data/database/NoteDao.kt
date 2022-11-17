@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface NoteDao {
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)//The OnConflictStrategy.IGNORE strategy ignores a new item if it's primary key is already in the database
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(item: Note)
 
     @Update
