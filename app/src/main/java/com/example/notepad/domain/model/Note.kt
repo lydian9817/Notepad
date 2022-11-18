@@ -10,4 +10,6 @@ data class Note(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     @Nonnull @ColumnInfo(name = "note_title") val noteTitle: String,
     @Nonnull @ColumnInfo(name = "note_content") val noteContent: String,
+    @Nonnull @ColumnInfo(name = "note_timestamp") val noteTimestamp: Long,
+
 )
