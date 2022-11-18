@@ -13,3 +13,6 @@ data class Note(
     @Nonnull @ColumnInfo(name = "note_timestamp") val noteTimestamp: Long,
 
 )
+
+//shows an error message if the note is invalid
+class InvalidNoteException(message: String): Exception(message)
