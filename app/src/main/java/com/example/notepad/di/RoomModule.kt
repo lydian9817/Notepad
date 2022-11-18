@@ -3,6 +3,11 @@ package com.example.notepad.di
 import android.content.Context
 import androidx.room.Room
 import com.example.notepad.data.data_source.NoteDatabase
+import com.example.notepad.data.data_source.repository.NoteRepositoryImpl
+import com.example.notepad.domain.repository.NoteRepository
+import com.example.notepad.domain.use_cases.DeleteNote
+import com.example.notepad.domain.use_cases.GetNotes
+import com.example.notepad.domain.use_cases.NoteUseCases
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,12 +21,23 @@ object RoomModule {
     //module set up
     private const val NOTE_DATABASE_NAME = "note_database"
 
-    @Singleton
     @Provides
+    @Singleton
     fun provideRoom(@ApplicationContext context: Context) =
         Room.databaseBuilder(context, NoteDatabase::class.java, NOTE_DATABASE_NAME).build()
 
-    @Singleton
     @Provides
-    fun provideNoteDao(db: NoteDatabase) = db.getNoteDao()
+    @Singleton
+    fun provideNoteRepository(db: NoteDatabase): NoteRepository {
+        return NoteRepositoryImpl(db.getNoteDao())
+    }
+
+    @Provides
+    @Singleton
+    fun provideNoteUseCases(repository: NoteRepository): NoteUseCases {
+        return NoteUseCases(
+            getNotes = GetNotes(repository),
+            deleteNote = DeleteNote(repository)
+        )
+    }
 }
