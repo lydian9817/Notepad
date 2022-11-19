@@ -1,123 +1,87 @@
 package com.example.notepad.presentation
 
-import androidx.compose.runtime.*
-import androidx.lifecycle.LiveData
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.notepad.domain.model.Note
-import com.example.notepad.domain.repository.NoteRepository
+import com.example.notepad.domain.use_cases.NoteUseCases
+import com.example.notepad.domain.util.NoteOrder
+import com.example.notepad.domain.util.OrderType
+import com.example.notepad.presentation.notes.NotesEvent
 import com.example.notepad.presentation.state.NotepadUiSate
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+/**The ViewModel interact with the use cases, which contains the business logic,
+and then, pass the results (states) to the UI*/
 @HiltViewModel
 class NotepadViewModel @Inject constructor(
-    private val roomNoteRepository: NoteRepository
+    private val noteUseCases: NoteUseCases
 ) : ViewModel() {
 
-    var noteTitle by mutableStateOf("")
-        private set
-    var noteContent by mutableStateOf("")
-        private set
+    //This contains the values observed by the UI
+    private val _state = mutableStateOf(NotepadUiSate())
+    val state: State<NotepadUiSate> = _state
+
+    //The recently deleted note reference, in order to restore it
+    private var recentlyDeletedNote: Note? = null
+
+    //Coroutine job
+    private var getNotesJob: Job? = null
+
+    //initially loads the list and sort it by date, in a descending order
     init {
-        resetStateValues()
-    }
-    //get all notes
-    val allNotes: LiveData<List<Note>> = roomNoteRepository.getNotes()
-
-    //get one note
-
-    fun retrieveNote(id: Int): LiveData<Note> {
-        return roomNoteRepository.getNoteById(id)
+        getNotes(NoteOrder.Date(OrderType.Descending))
     }
 
-    fun updateStates (note: MutableState<Note?>){
-        noteTitle = note.value?.noteTitle.toString()
-        noteContent = note.value?.noteContent.toString()
-    }
+    //This function is called from the UI
+    fun onEvent(event: NotesEvent) {
+        when (event) {
+            is NotesEvent.Order -> {
+                //compares de class used by the ui to the event one. The order changes according
+                //to that comparison. For example, if the order and order type are equals,
+                // nothing is done (return)
+                if (state.value.noteOrder::class == event.noteOrder::class && state.value.noteOrder.orderType::class == event.noteOrder.orderType::class) {
+                    return
+                }
+                getNotes(event.noteOrder)
 
-    // Notepad UI state----------
-    private val _uiState = MutableStateFlow(NotepadUiSate())
-    val uiState: StateFlow<NotepadUiSate> = _uiState.asStateFlow()
-
-
-
-    fun updateNoteTitle(updatedTitle: String) {
-        noteTitle = updatedTitle
-    }
-    fun updateNoteContent(updatedContent: String) {
-        noteContent = updatedContent
-    }
-    //----------------------------
-
-    //add note-------
-    private fun insertNote(note: Note) {
-        viewModelScope.launch {
-            roomNoteRepository.insertNote(note)
+            }
+            is NotesEvent.DeleteNote -> {
+                viewModelScope.launch {
+                    noteUseCases.deleteNote(event.note)
+                    recentlyDeletedNote = event.note
+                }
+            }
+            is NotesEvent.RestoreNote -> {
+                viewModelScope.launch {
+                    noteUseCases.addNote(recentlyDeletedNote ?: return@launch)
+                    recentlyDeletedNote = null
+                }
+            }
+            is NotesEvent.ToggleOrderSection -> {
+                //copies the "ui side" value and invert it
+                _state.value = state.value.copy(
+                    isOrderSectionVisible = !state.value.isOrderSectionVisible
+                )
+            }
         }
     }
 
-    private fun getNewNoteEntry(noteTitle: String, noteContent: String): Note {
-        return Note(
-            noteTitle = noteTitle,
-            noteContent = noteContent
-        )
-    }
-
-    fun addNewNote(noteTitle: String, noteContent: String) {
-        val newNote = getNewNoteEntry(noteTitle, noteContent)
-        insertNote(newNote)
-        resetStateValues()
-    }
-    //-----------------
-
-    //update note------
-    private fun updateNote(note: Note) {
-        viewModelScope.launch {
-            roomNoteRepository.updateNote(note)
-        }
-    }
-
-    private fun getUpdatedNoteEntry(noteId: Int, noteTitle: String, noteContent: String): Note {
-        return Note(
-            id = noteId,
-            noteTitle = noteTitle,
-            noteContent = noteContent
-        )
-    }
-
-    fun updateNote(noteId: Int, noteTitle: String, noteContent: String) {
-        val updatedNote = getUpdatedNoteEntry(noteId, noteTitle, noteContent)
-        updateNote(updatedNote)
-    }
-    //-----------------
-
-    //delete note------
-    fun deleteNote(note: Note) {
-        viewModelScope.launch {
-            roomNoteRepository.deleteNote(note)
-        }
-    }
-    //-----------------
-
-    //check if the note has title and content in order to enable or disable the save button
-    fun isNoteValid(noteTitle: String, noteContent: String): Boolean {
-        return !(noteTitle.isBlank() || noteContent.isBlank())
-    }
-    //-----------------
-
-    //check if the list is empty
-    fun isListEmpty(): Boolean {
-        return allNotes.value.isNullOrEmpty()
-    }
-    //-----------------
-
-    fun resetStateValues() {
-        noteTitle = ""
-        noteContent= ""
+    //First, this cancels the coroutine job in case it is running, and then set it to the getNotes use case.
+    //Then, on each note list emission, _state changes its value (the list) to the ui side state variable,
+    // so that it cannot be modified again in recompositions. Finally launch this on a coroutine
+    private fun getNotes(noteOrder: NoteOrder) {
+        getNotesJob?.cancel()
+        getNotesJob = noteUseCases.getNotes(noteOrder).onEach { notes ->
+            _state.value = state.value.copy(
+                notes = notes, noteOrder = noteOrder
+            )
+        }.launchIn(viewModelScope)
     }
 }
