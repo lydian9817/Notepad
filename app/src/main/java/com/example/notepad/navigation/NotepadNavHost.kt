@@ -9,9 +9,9 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.example.notepad.ui.NotepadViewModel
-import com.example.notepad.ui.edit.EditScreen
-import com.example.notepad.ui.home.HomeScreen
+import com.example.notepad.presentation.NotepadViewModel
+import com.example.notepad.presentation.edit.EditScreen
+import com.example.notepad.presentation.home.HomeScreen
 
 @Composable
 fun NotepadNavHost(navController: NavHostController) {

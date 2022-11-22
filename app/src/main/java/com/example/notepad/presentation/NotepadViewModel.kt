@@ -1,4 +1,4 @@
-package com.example.notepad.ui
+package com.example.notepad.presentation
 
 import androidx.compose.runtime.*
 import androidx.lifecycle.LiveData
