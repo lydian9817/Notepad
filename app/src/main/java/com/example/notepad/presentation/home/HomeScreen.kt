@@ -17,6 +17,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.example.notepad.data.database.Note
 import com.example.notepad.presentation.NotepadViewModel
+import com.example.notepad.presentation.home.components.OrderDialogBox
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")//evita el error de padding
 @Composable
@@ -28,12 +29,17 @@ fun HomeScreen(
     var isMenuOpen by remember { mutableStateOf(false) }
     val notes = notepadViewModel.allNotes.observeAsState(listOf())
     val isListEmpty = notepadViewModel.isListEmpty()
+    var isDialogOpen by remember { mutableStateOf(false) }
 
     Scaffold(
         topBar = {
             AppBar(
                 updateShowMenu = { isMenuOpen = !isMenuOpen },
-                isMenuOpen = isMenuOpen
+                isMenuOpen = isMenuOpen,
+                updateShowDialog = {
+                    isDialogOpen = true
+                    isMenuOpen = false
+                }
             )
         },
         floatingActionButton = {
@@ -48,13 +54,24 @@ fun HomeScreen(
         } else {
             NoteList(notes = notes, onNoteClick = onNoteClick)
         }
+        if (isDialogOpen) {
+            OrderDialogBox(
+                updateShowDialog = {
+                    isDialogOpen = false
+                }
+            )
+        }
 
     }
 
 }
 
 @Composable
-fun AppBar(updateShowMenu: () -> Unit, isMenuOpen: Boolean) {
+fun AppBar(
+    updateShowMenu: () -> Unit,
+    isMenuOpen: Boolean,
+    updateShowDialog: () -> Unit
+) {
     val context = LocalContext.current
     TopAppBar(
         navigationIcon = {
@@ -72,14 +89,14 @@ fun AppBar(updateShowMenu: () -> Unit, isMenuOpen: Boolean) {
         },
         actions = {
             //Box {
-                IconButton(onClick = updateShowMenu) {
-                    Icon(
-                        imageVector = Icons.Rounded.MoreVert,
-                        contentDescription = "settings icon",
-                        modifier = Modifier.padding(horizontal = 12.dp)
-                    )
+            IconButton(onClick = updateShowMenu) {
+                Icon(
+                    imageVector = Icons.Rounded.MoreVert,
+                    contentDescription = "settings icon",
+                    modifier = Modifier.padding(horizontal = 12.dp)
+                )
 
-                }
+            }
             //}
             DropdownMenu(
                 expanded = isMenuOpen,
@@ -97,8 +114,8 @@ fun AppBar(updateShowMenu: () -> Unit, isMenuOpen: Boolean) {
                 ) {
                     Text(text = "Toast")
                 }
-                DropdownMenuItem(onClick = { /*TODO*/ }) {
-                    Text(text = "Order")
+                DropdownMenuItem(onClick = updateShowDialog) {
+                    Text(text = "Sort by")
                 }
             }
 
