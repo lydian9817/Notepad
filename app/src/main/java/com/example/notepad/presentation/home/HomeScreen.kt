@@ -29,13 +29,12 @@ fun HomeScreen(
     notepadViewModel: NotepadViewModel
 ) {
     val notes = notepadViewModel.allNotes.observeAsState(listOf())
-    val isListEmpty = notepadViewModel.isListEmpty()
     Scaffold(
         topBar = { AppBar() },
         floatingActionButton = { HomeFloatingActionButton( onClickAdd = onClickAddNote ) }
     ) {
         //EmptyNoteList()
-        if (isListEmpty) {
+        if (notepadViewModel.isListEmpty) {
             EmptyNoteList()
         } else {
             NoteList(notes = notes, onNoteClick = onNoteClick)

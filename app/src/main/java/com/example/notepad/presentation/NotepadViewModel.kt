@@ -28,6 +28,8 @@ class NotepadViewModel @Inject constructor(
     private val _state = mutableStateOf(NotepadUiSate())
     val state: State<NotepadUiSate> = _state
 
+    val isListEmpty = _state.value.notes.isEmpty()
+
     //The recently deleted note reference, in order to restore it
     private var recentlyDeletedNote: Note? = null
 
