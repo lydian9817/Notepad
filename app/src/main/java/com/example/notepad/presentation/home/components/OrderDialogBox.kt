@@ -12,9 +12,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import com.example.notepad.domain.util.NoteOrder
+import com.example.notepad.domain.util.OrderType
 
 @Composable
-fun OrderDialogBox(updateShowDialog: () -> Unit) {
+fun OrderDialogBox(
+    updateShowDialog: () -> Unit,
+    noteOrder: NoteOrder = NoteOrder.Date(OrderType.Descending),
+    onOrderChange: (NoteOrder) -> Unit
+) {
     val orderType = listOf("Date", "Title")
     val order = listOf("Ascending", "Descending")
     val (selectedType, onTypeSelected) = remember { mutableStateOf(orderType[0]) }
