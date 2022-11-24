@@ -15,6 +15,7 @@ import androidx.compose.material.icons.rounded.Menu
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -28,13 +29,17 @@ fun HomeScreen(
     onNoteClick: (String) -> Unit = {},
     notepadViewModel: NotepadViewModel
 ) {
-    val notes = notepadViewModel.allNotes.observeAsState(listOf())
+    val state = notepadViewModel.state.value
+    val scaffoldState = rememberScaffoldState()
+    val scope = rememberCoroutineScope()
+
     Scaffold(
         topBar = { AppBar() },
-        floatingActionButton = { HomeFloatingActionButton( onClickAdd = onClickAddNote ) }
+        floatingActionButton = { HomeFloatingActionButton( onClickAdd = onClickAddNote ) },
+        scaffoldState = scaffoldState
     ) {
         //EmptyNoteList()
-        if (notepadViewModel.isListEmpty) {
+        if (state.notes.isEmpty()) {
             EmptyNoteList()
         } else {
             NoteList(notes = notes, onNoteClick = onNoteClick)
