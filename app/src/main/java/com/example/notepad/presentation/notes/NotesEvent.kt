@@ -8,5 +8,5 @@ sealed class NotesEvent {
     data class DeleteNote(val note: Note): NotesEvent()
     object RestoreNote: NotesEvent()
     object ToggleOrderDialog: NotesEvent()
-    object OpenDropdownMenu: NotesEvent()
+    object ToggleDropdownMenu: NotesEvent()
 }

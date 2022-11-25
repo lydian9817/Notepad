@@ -16,7 +16,6 @@ import androidx.compose.material.icons.rounded.Menu
 import androidx.compose.material.icons.rounded.MoreVert
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -24,6 +23,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.example.notepad.domain.model.Note
 import com.example.notepad.presentation.NotepadViewModel
+import com.example.notepad.presentation.notes.NotesEvent
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")//evita el error de padding
 @Composable
@@ -37,7 +37,11 @@ fun HomeScreen(
     val scope = rememberCoroutineScope()
 
     Scaffold(
-        topBar = { AppBar() },
+        topBar = { AppBar(
+            isMenuOpen = state.isDropdownMenuOpen,
+            updateShowMenu = { notepadViewModel.onEvent(NotesEvent.ToggleDropdownMenu) },
+            updateShowDialog = { notepadViewModel.onEvent(NotesEvent.ToggleOrderDialog) }
+        ) },
         floatingActionButton = { HomeFloatingActionButton( onClickAdd = onClickAddNote ) },
         scaffoldState = scaffoldState
     ) {

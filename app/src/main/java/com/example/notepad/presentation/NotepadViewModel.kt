@@ -72,7 +72,7 @@ class NotepadViewModel @Inject constructor(
                     isOrderDialogVisible = !state.value.isOrderDialogVisible
                 )
             }
-            is NotesEvent.OpenDropdownMenu -> {
+            is NotesEvent.ToggleDropdownMenu -> {
                 _state.value = state.value.copy(
                     isDropdownMenuOpen = !state.value.isDropdownMenuOpen
                 )
