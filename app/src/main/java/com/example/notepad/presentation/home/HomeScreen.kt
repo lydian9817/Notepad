@@ -1,6 +1,7 @@
 package com.example.notepad.presentation.home
 
 import android.annotation.SuppressLint
+import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -12,12 +13,14 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.Menu
+import androidx.compose.material.icons.rounded.MoreVert
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.example.notepad.domain.model.Note
 import com.example.notepad.presentation.NotepadViewModel
@@ -50,7 +53,12 @@ fun HomeScreen(
 }
 
 @Composable
-fun AppBar() {
+fun AppBar(
+    updateShowMenu: () -> Unit,
+    isMenuOpen: Boolean,
+    updateShowDialog: () -> Unit
+) {
+    val context = LocalContext.current
     TopAppBar(
         navigationIcon = {
             IconButton(onClick = { /*TODO*/ }) {
@@ -64,9 +72,42 @@ fun AppBar() {
         },
         title = {
             Text("Home Screen")
+        },
+        actions = {
+            //Box {
+            IconButton(onClick = updateShowMenu) {
+                Icon(
+                    imageVector = Icons.Rounded.MoreVert,
+                    contentDescription = "settings icon",
+                    modifier = Modifier.padding(horizontal = 12.dp)
+                )
+
+            }
+            //}
+            DropdownMenu(
+                expanded = isMenuOpen,
+                onDismissRequest = updateShowMenu,
+                modifier = Modifier.padding(5.dp)
+            ) {
+                DropdownMenuItem(
+                    onClick = {
+                        Toast.makeText(
+                            context,
+                            "Toast",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                ) {
+                    Text(text = "Toast")
+                }
+                DropdownMenuItem(onClick = updateShowDialog) {
+                    Text(text = "Sort by")
+                }
+            }
         }
     )
 }
+
 
 @Composable
 fun HomeFloatingActionButton(onClickAdd: () -> Unit) {
