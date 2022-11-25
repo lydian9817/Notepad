@@ -7,5 +7,6 @@ import com.example.notepad.domain.util.OrderType
 data class NotepadUiSate(
     val notes: List<Note> = emptyList(),
     val noteOrder: NoteOrder = NoteOrder.Date(OrderType.Descending), //default order
-    val isOrderSectionVisible: Boolean = false
+    val isOrderDialogVisible: Boolean = false,
+    val isDropdownMenuOpen: Boolean = false
 )

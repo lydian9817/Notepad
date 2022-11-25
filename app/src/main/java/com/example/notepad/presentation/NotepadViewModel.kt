@@ -66,10 +66,15 @@ class NotepadViewModel @Inject constructor(
                     recentlyDeletedNote = null
                 }
             }
-            is NotesEvent.ToggleOrderSection -> {
+            is NotesEvent.ToggleOrderDialog -> {
                 //copies the "ui side" value and invert it
                 _state.value = state.value.copy(
-                    isOrderSectionVisible = !state.value.isOrderSectionVisible
+                    isOrderDialogVisible = !state.value.isOrderDialogVisible
+                )
+            }
+            is NotesEvent.OpenDropdownMenu -> {
+                _state.value = state.value.copy(
+                    isDropdownMenuOpen = !state.value.isDropdownMenuOpen
                 )
             }
         }
