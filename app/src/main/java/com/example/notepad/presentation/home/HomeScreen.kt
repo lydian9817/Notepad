@@ -12,6 +12,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
+import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.material.icons.rounded.Menu
 import androidx.compose.material.icons.rounded.MoreVert
 import androidx.compose.runtime.Composable
@@ -38,12 +39,14 @@ fun HomeScreen(
     val scope = rememberCoroutineScope()
 
     Scaffold(
-        topBar = { AppBar(
-            isMenuOpen = state.isDropdownMenuOpen,
-            updateShowMenu = { notepadViewModel.onEvent(NotesEvent.ToggleDropdownMenu) },
-            updateShowDialog = { notepadViewModel.onEvent(NotesEvent.ToggleOrderDialog) }
-        ) },
-        floatingActionButton = { HomeFloatingActionButton( onClickAdd = onClickAddNote ) },
+        topBar = {
+            AppBar(
+                isMenuOpen = state.isDropdownMenuOpen,
+                updateShowMenu = { notepadViewModel.onEvent(NotesEvent.ToggleDropdownMenu) },
+                updateShowDialog = { notepadViewModel.onEvent(NotesEvent.ToggleOrderDialog) }
+            )
+        },
+        floatingActionButton = { HomeFloatingActionButton(onClickAdd = onClickAddNote) },
         scaffoldState = scaffoldState
     ) {
         //EmptyNoteList()
@@ -134,7 +137,7 @@ fun EmptyNoteList() {
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
-        ) {
+    ) {
         Text(
             text = "Tap + to write a new note!",
             style = MaterialTheme.typography.h6,
@@ -144,23 +147,40 @@ fun EmptyNoteList() {
 
 @Composable
 fun NoteList(notes: State<List<Note>?>, onNoteClick: (String) -> Unit = {}) {
-        LazyColumn {
-            notes.value?.size?.let {
-                items(it) {
-                    Note(note = notes.value!![it], onNoteClick = onNoteClick)
+    LazyColumn {
+        notes.value?.size?.let {
+            items(it) {
+                Note(note = notes.value!![it], onNoteClick = onNoteClick)
 
-                }
             }
         }
     }
+}
 
 @Composable
-fun Note(note: Note, onNoteClick: (String) -> Unit) {
-    Surface(modifier = Modifier.clickable { onNoteClick(note.id.toString()) }) {
-        Column(modifier = Modifier.padding(8.dp)) {
-            Text(text = note.noteTitle, style = MaterialTheme.typography.subtitle2 )
-            Text(text = note.noteContent, style = MaterialTheme.typography.body2)
-            Divider()
+fun Note(note: Note, onNoteClick: (String) -> Unit, onDelete: () -> Unit) {
+    Surface(
+        modifier = Modifier.clickable { onNoteClick(note.id.toString()) }) {
+        Column(
+            modifier = Modifier.padding(8.dp)
+        ) {
+            Text(
+                text = note.noteTitle,
+                style = MaterialTheme.typography.subtitle2
+            )
+            Text(
+                text = note.noteContent,
+                style = MaterialTheme.typography.body2
+            )
+            IconButton(
+                onClick = onDelete,
+                modifier = Modifier.align(Alignment.CenterHorizontally)
+            ) {
+                Icon(
+                    imageVector = Icons.Rounded.Delete,
+                    contentDescription = "delete note"
+                )
+            }
         }
     }
 
