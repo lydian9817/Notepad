@@ -23,6 +23,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.example.notepad.domain.model.Note
 import com.example.notepad.presentation.NotepadViewModel
+import com.example.notepad.presentation.home.components.OrderDialogBox
 import com.example.notepad.presentation.notes.NotesEvent
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")//evita el error de padding
@@ -51,7 +52,11 @@ fun HomeScreen(
         } else {
             NoteList(notes = notes, onNoteClick = onNoteClick)
         }
-
+        if (state.isOrderDialogVisible) {
+            OrderDialogBox(
+                updateShowDialog = { notepadViewModel.onEvent(NotesEvent.ToggleOrderDialog) }
+            )
+        }
     }
 
 }
