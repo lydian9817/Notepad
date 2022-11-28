@@ -57,7 +57,9 @@ fun HomeScreen(
         }
         if (state.isOrderDialogVisible) {
             OrderDialogBox(
-                updateShowDialog = { notepadViewModel.onEvent(NotesEvent.ToggleOrderDialog) }
+                updateShowDialog = { notepadViewModel.onEvent(NotesEvent.ToggleOrderDialog) },
+                noteOrder = state.noteOrder,
+                onOrderChange = { notepadViewModel.onEvent(NotesEvent.Order(it)) }
             )
         }
     }
