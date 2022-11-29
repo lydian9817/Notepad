@@ -9,7 +9,7 @@ import com.example.notepad.domain.use_cases.NoteUseCases
 import com.example.notepad.domain.util.NoteOrder
 import com.example.notepad.domain.util.OrderType
 import com.example.notepad.presentation.notes.NotesEvent
-import com.example.notepad.presentation.state.NotepadUiSate
+import com.example.notepad.presentation.home.state.HomeState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.launchIn
@@ -25,8 +25,8 @@ class HomeViewModel @Inject constructor(
 ) : ViewModel() {
 
     //This contains the values observed by the UI
-    private val _state = mutableStateOf(NotepadUiSate())
-    val state: State<NotepadUiSate> = _state
+    private val _state = mutableStateOf(HomeState())
+    val state: State<HomeState> = _state
 
     val isListEmpty = _state.value.notes.isEmpty()
 
