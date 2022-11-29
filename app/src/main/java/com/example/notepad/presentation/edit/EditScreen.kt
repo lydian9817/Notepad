@@ -14,7 +14,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.notepad.domain.model.Note
-import com.example.notepad.presentation.HomeViewModel
+import com.example.notepad.presentation.home.HomeViewModel
 import com.example.notepad.presentation.notes.TextNoteEdit
 
 @Composable

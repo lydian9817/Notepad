@@ -23,7 +23,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.example.notepad.domain.model.Note
-import com.example.notepad.presentation.HomeViewModel
 import com.example.notepad.presentation.home.components.OrderDialogBox
 import com.example.notepad.presentation.notes.NotesEvent
 import kotlinx.coroutines.launch
