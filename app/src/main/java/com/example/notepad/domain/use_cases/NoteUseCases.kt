@@ -4,5 +4,6 @@ package com.example.notepad.domain.use_cases
 data class NoteUseCases (
     val getNotes: GetNotes,
     val deleteNote: DeleteNote,
-    val addNote: AddNote
+    val addNote: AddNote,
+    val getNote: GetNote
 )
