@@ -9,7 +9,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.example.notepad.presentation.NotepadViewModel
+import com.example.notepad.presentation.HomeViewModel
 import com.example.notepad.presentation.edit.EditScreen
 import com.example.notepad.presentation.home.HomeScreen
 
@@ -20,8 +20,8 @@ fun NotepadNavHost(navController: NavHostController) {
         startDestination = HomeScreen.route
     ) {
         composable(route = HomeScreen.route) {
-            val notepadViewModel = hiltViewModel<NotepadViewModel>() //viewModel
-            notepadViewModel.resetStateValues()
+            val homeViewModel = hiltViewModel<HomeViewModel>() //viewModel
+            homeViewModel.resetStateValues()
             HomeScreen(
                 onClickAddNote = {
                     navController.navigate(EditScreen.route + "/noteId") {
@@ -34,7 +34,7 @@ fun NotepadNavHost(navController: NavHostController) {
                         launchSingleTop = true
                     }
                 },
-                notepadViewModel = notepadViewModel
+                homeViewModel = homeViewModel
             )
         }
         composable(
@@ -52,7 +52,7 @@ fun NotepadNavHost(navController: NavHostController) {
             val parentEntry = remember(it) {
                 navController.getBackStackEntry(HomeScreen.route)
             }
-            val parentViewModel = hiltViewModel<NotepadViewModel>(
+            val parentViewModel = hiltViewModel<HomeViewModel>(
                 parentEntry
             )
             val nota = it.arguments?.getString("noteId")
@@ -70,7 +70,7 @@ fun NotepadNavHost(navController: NavHostController) {
                     parentViewModel.addNewNote(parentViewModel.noteTitle, parentViewModel.noteContent)
                 },
                 selectedNoteId = it.arguments?.getString("noteId"),
-                notepadViewModel = parentViewModel
+                homeViewModel = parentViewModel
             )
         }
     }

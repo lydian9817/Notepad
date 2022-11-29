@@ -23,7 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.example.notepad.domain.model.Note
-import com.example.notepad.presentation.NotepadViewModel
+import com.example.notepad.presentation.HomeViewModel
 import com.example.notepad.presentation.home.components.OrderDialogBox
 import com.example.notepad.presentation.notes.NotesEvent
 import kotlinx.coroutines.launch
@@ -33,9 +33,9 @@ import kotlinx.coroutines.launch
 fun HomeScreen(
     onClickAddNote: () -> Unit = {},
     onNoteClick: (String) -> Unit = {},
-    notepadViewModel: NotepadViewModel
+    homeViewModel: HomeViewModel
 ) {
-    val state = notepadViewModel.state.value
+    val state = homeViewModel.state.value
     val scaffoldState = rememberScaffoldState()
     val scope = rememberCoroutineScope()
 
@@ -44,10 +44,10 @@ fun HomeScreen(
             AppBar(
                 isMenuOpen = state.isDropdownMenuOpen,
                 updateShowMenu = {
-                    notepadViewModel.onEvent(NotesEvent.ToggleDropdownMenu)
+                    homeViewModel.onEvent(NotesEvent.ToggleDropdownMenu)
                 },
                 updateShowDialog = {
-                    notepadViewModel.onEvent(NotesEvent.ToggleOrderDialog)
+                    homeViewModel.onEvent(NotesEvent.ToggleOrderDialog)
                 }
             )
         },
@@ -64,7 +64,7 @@ fun HomeScreen(
                 notes = state.notes,
                 onNoteClick = onNoteClick,
                 onDelete = { note ->
-                    notepadViewModel.onEvent(NotesEvent.DeleteNote(note))
+                    homeViewModel.onEvent(NotesEvent.DeleteNote(note))
                     //Snack bars should be launched from a coroutine
                     scope.launch {
                         val result = scaffoldState.snackbarHostState.showSnackbar(
@@ -72,7 +72,7 @@ fun HomeScreen(
                             actionLabel = "Undo"
                         )
                         if (result == SnackbarResult.ActionPerformed) {
-                            notepadViewModel.onEvent(NotesEvent.RestoreNote)
+                            homeViewModel.onEvent(NotesEvent.RestoreNote)
                         }
                     }
                 }
@@ -80,9 +80,9 @@ fun HomeScreen(
         }
         if (state.isOrderDialogVisible) {
             OrderDialogBox(
-                updateShowDialog = { notepadViewModel.onEvent(NotesEvent.ToggleOrderDialog) },
+                updateShowDialog = { homeViewModel.onEvent(NotesEvent.ToggleOrderDialog) },
                 noteOrder = state.noteOrder,
-                onOrderChange = { notepadViewModel.onEvent(NotesEvent.Order(it)) }
+                onOrderChange = { homeViewModel.onEvent(NotesEvent.Order(it)) }
             )
         }
     }

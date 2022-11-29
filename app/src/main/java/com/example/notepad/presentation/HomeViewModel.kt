@@ -20,7 +20,7 @@ import javax.inject.Inject
 /**The ViewModel interact with the use cases, which contains the business logic,
 and then, pass the results (states) to the UI*/
 @HiltViewModel
-class NotepadViewModel @Inject constructor(
+class HomeViewModel @Inject constructor(
     private val noteUseCases: NoteUseCases
 ) : ViewModel() {
 

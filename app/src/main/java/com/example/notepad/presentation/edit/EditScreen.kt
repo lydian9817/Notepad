@@ -14,34 +14,34 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.notepad.domain.model.Note
-import com.example.notepad.presentation.NotepadViewModel
+import com.example.notepad.presentation.HomeViewModel
 import com.example.notepad.presentation.notes.TextNoteEdit
 
 @Composable
 fun EditScreen(
     onClickSaveNote: () -> Unit = {},
     selectedNoteId: String?,
-    notepadViewModel: NotepadViewModel
+    homeViewModel: HomeViewModel
 ) {
 
     val isNoteValid =
-        notepadViewModel.isNoteValid(notepadViewModel.noteTitle, notepadViewModel.noteContent)
+        homeViewModel.isNoteValid(homeViewModel.noteTitle, homeViewModel.noteContent)
 
     Log.i("selected id", "noteId es $selectedNoteId")
 
     if (selectedNoteId != "noteId" && selectedNoteId != null) {
         Log.i("to int", "es ${selectedNoteId.toInt()}")
-        val retrievedNote = notepadViewModel.retrieveNote(selectedNoteId.toInt()).observeAsState()
-        notepadViewModel.updateStates(retrievedNote as MutableState<Note?>)
+        val retrievedNote = homeViewModel.retrieveNote(selectedNoteId.toInt()).observeAsState()
+        homeViewModel.updateStates(retrievedNote as MutableState<Note?>)
     }
 
     Column {
         IconRow()
         TextNoteEdit(
-            title = notepadViewModel.noteTitle,
-            onTitleChange = { notepadViewModel.updateNoteTitle(it) },
-            content = notepadViewModel.noteContent,
-            onContentChange = { notepadViewModel.updateNoteContent(it) }
+            title = homeViewModel.noteTitle,
+            onTitleChange = { homeViewModel.updateNoteTitle(it) },
+            content = homeViewModel.noteContent,
+            onContentChange = { homeViewModel.updateNoteContent(it) }
         )
         Spacer(modifier = Modifier.height(30.dp))
         SaveButton(onClickSave = onClickSaveNote, isEnabled = isNoteValid)
