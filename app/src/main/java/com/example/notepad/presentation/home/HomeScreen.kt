@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -16,7 +17,6 @@ import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.material.icons.rounded.Menu
 import androidx.compose.material.icons.rounded.MoreVert
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.State
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -42,18 +42,30 @@ fun HomeScreen(
         topBar = {
             AppBar(
                 isMenuOpen = state.isDropdownMenuOpen,
-                updateShowMenu = { notepadViewModel.onEvent(NotesEvent.ToggleDropdownMenu) },
-                updateShowDialog = { notepadViewModel.onEvent(NotesEvent.ToggleOrderDialog) }
+                updateShowMenu = {
+                    notepadViewModel.onEvent(NotesEvent.ToggleDropdownMenu)
+                },
+                updateShowDialog = {
+                    notepadViewModel.onEvent(NotesEvent.ToggleOrderDialog)
+                }
             )
         },
-        floatingActionButton = { HomeFloatingActionButton(onClickAdd = onClickAddNote) },
+        floatingActionButton = {
+            HomeFloatingActionButton(onClickAdd = onClickAddNote)
+        },
         scaffoldState = scaffoldState
     ) {
         //EmptyNoteList()
         if (state.notes.isEmpty()) {
             EmptyNoteList()
         } else {
-            NoteList(notes = notes, onNoteClick = onNoteClick)
+            NoteList(
+                notes = state.notes,
+                onNoteClick = onNoteClick,
+                onDelete = { note ->
+                    notepadViewModel.onEvent(NotesEvent.DeleteNote(note))
+                }
+            )
         }
         if (state.isOrderDialogVisible) {
             OrderDialogBox(
@@ -148,21 +160,31 @@ fun EmptyNoteList() {
 }
 
 @Composable
-fun NoteList(notes: State<List<Note>?>, onNoteClick: (String) -> Unit = {}) {
+fun NoteList(
+    notes: List<Note>,
+    onNoteClick: (String) -> Unit = {},
+    onDelete: (Note) -> Unit = {}
+) {
     LazyColumn {
-        notes.value?.size?.let {
-            items(it) {
-                Note(note = notes.value!![it], onNoteClick = onNoteClick)
-
-            }
+        items(notes) { note ->
+            NoteItem(
+                note = note,
+                onDelete = onDelete,
+                modifier = Modifier.clickable {
+                    //TODO
+                }
+            )
         }
     }
 }
 
 @Composable
-fun Note(note: Note, onNoteClick: (String) -> Unit, onDelete: () -> Unit) {
-    Surface(
-        modifier = Modifier.clickable { onNoteClick(note.id.toString()) }) {
+fun NoteItem(
+    note: Note,
+    onDelete: (Note) -> Unit,
+    modifier: Modifier
+) {
+    Surface() {
         Column(
             modifier = Modifier.padding(8.dp)
         ) {
@@ -175,7 +197,7 @@ fun Note(note: Note, onNoteClick: (String) -> Unit, onDelete: () -> Unit) {
                 style = MaterialTheme.typography.body2
             )
             IconButton(
-                onClick = onDelete,
+                onClick = { onDelete(note) },
                 modifier = Modifier.align(Alignment.CenterHorizontally)
             ) {
                 Icon(
@@ -185,28 +207,6 @@ fun Note(note: Note, onNoteClick: (String) -> Unit, onDelete: () -> Unit) {
             }
         }
     }
-
-}
-/*
-@Preview
-@Composable
-fun NoteListPreview() {
-    NotepadTheme() {
-        NoteList()
-    }
-
 }
 
- */
-
-
-/*
-@Preview(showSystemUi = true)
-@Composable
-fun HomeScreenPreview() {
-    NotepadTheme {
-        HomeScreen()
-    }
-}
- */
 
