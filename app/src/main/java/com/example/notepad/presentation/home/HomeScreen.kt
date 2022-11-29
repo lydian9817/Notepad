@@ -26,6 +26,7 @@ import com.example.notepad.domain.model.Note
 import com.example.notepad.presentation.NotepadViewModel
 import com.example.notepad.presentation.home.components.OrderDialogBox
 import com.example.notepad.presentation.notes.NotesEvent
+import kotlinx.coroutines.launch
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")//evita el error de padding
 @Composable
@@ -64,6 +65,16 @@ fun HomeScreen(
                 onNoteClick = onNoteClick,
                 onDelete = { note ->
                     notepadViewModel.onEvent(NotesEvent.DeleteNote(note))
+                    //Snack bars should be launched from a coroutine
+                    scope.launch {
+                        val result = scaffoldState.snackbarHostState.showSnackbar(
+                            message = "Note Deleted",
+                            actionLabel = "Undo"
+                        )
+                        if (result == SnackbarResult.ActionPerformed) {
+                            notepadViewModel.onEvent(NotesEvent.RestoreNote)
+                        }
+                    }
                 }
             )
         }
