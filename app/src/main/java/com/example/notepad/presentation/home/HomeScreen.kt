@@ -24,7 +24,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.example.notepad.domain.model.Note
 import com.example.notepad.presentation.home.components.OrderDialogBox
-import com.example.notepad.presentation.notes.NotesEvent
+import com.example.notepad.presentation.notes.HomeNotesEvent
 import kotlinx.coroutines.launch
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")//evita el error de padding
@@ -43,10 +43,10 @@ fun HomeScreen(
             AppBar(
                 isMenuOpen = state.isDropdownMenuOpen,
                 updateShowMenu = {
-                    homeViewModel.onEvent(NotesEvent.ToggleDropdownMenu)
+                    homeViewModel.onEvent(HomeNotesEvent.ToggleDropdownMenu)
                 },
                 updateShowDialog = {
-                    homeViewModel.onEvent(NotesEvent.ToggleOrderDialog)
+                    homeViewModel.onEvent(HomeNotesEvent.ToggleOrderDialog)
                 }
             )
         },
@@ -63,7 +63,7 @@ fun HomeScreen(
                 notes = state.notes,
                 onNoteClick = onNoteClick,
                 onDelete = { note ->
-                    homeViewModel.onEvent(NotesEvent.DeleteNote(note))
+                    homeViewModel.onEvent(HomeNotesEvent.DeleteNote(note))
                     //Snack bars should be launched from a coroutine
                     scope.launch {
                         val result = scaffoldState.snackbarHostState.showSnackbar(
@@ -71,7 +71,7 @@ fun HomeScreen(
                             actionLabel = "Undo"
                         )
                         if (result == SnackbarResult.ActionPerformed) {
-                            homeViewModel.onEvent(NotesEvent.RestoreNote)
+                            homeViewModel.onEvent(HomeNotesEvent.RestoreNote)
                         }
                     }
                 }
@@ -79,9 +79,9 @@ fun HomeScreen(
         }
         if (state.isOrderDialogVisible) {
             OrderDialogBox(
-                updateShowDialog = { homeViewModel.onEvent(NotesEvent.ToggleOrderDialog) },
+                updateShowDialog = { homeViewModel.onEvent(HomeNotesEvent.ToggleOrderDialog) },
                 noteOrder = state.noteOrder,
-                onOrderChange = { homeViewModel.onEvent(NotesEvent.Order(it)) }
+                onOrderChange = { homeViewModel.onEvent(HomeNotesEvent.Order(it)) }
             )
         }
     }

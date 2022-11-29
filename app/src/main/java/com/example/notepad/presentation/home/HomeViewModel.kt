@@ -8,7 +8,7 @@ import com.example.notepad.domain.model.Note
 import com.example.notepad.domain.use_cases.NoteUseCases
 import com.example.notepad.domain.util.NoteOrder
 import com.example.notepad.domain.util.OrderType
-import com.example.notepad.presentation.notes.NotesEvent
+import com.example.notepad.presentation.notes.HomeNotesEvent
 import com.example.notepad.presentation.home.state.HomeState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
@@ -42,9 +42,9 @@ class HomeViewModel @Inject constructor(
     }
 
     //This function is called from the UI
-    fun onEvent(event: NotesEvent) {
+    fun onEvent(event: HomeNotesEvent) {
         when (event) {
-            is NotesEvent.Order -> {
+            is HomeNotesEvent.Order -> {
                 //compares de class used by the ui to the event one. The order changes according
                 //to that comparison. For example, if the order and order type are equals,
                 // nothing is done (return)
@@ -54,25 +54,25 @@ class HomeViewModel @Inject constructor(
                 getNotes(event.noteOrder)
 
             }
-            is NotesEvent.DeleteNote -> {
+            is HomeNotesEvent.DeleteNote -> {
                 viewModelScope.launch {
                     noteUseCases.deleteNote(event.note)
                     recentlyDeletedNote = event.note
                 }
             }
-            is NotesEvent.RestoreNote -> {
+            is HomeNotesEvent.RestoreNote -> {
                 viewModelScope.launch {
                     noteUseCases.addNote(recentlyDeletedNote ?: return@launch)
                     recentlyDeletedNote = null
                 }
             }
-            is NotesEvent.ToggleOrderDialog -> {
+            is HomeNotesEvent.ToggleOrderDialog -> {
                 //copies the "ui side" value and invert it
                 _state.value = state.value.copy(
                     isOrderDialogVisible = !state.value.isOrderDialogVisible
                 )
             }
-            is NotesEvent.ToggleDropdownMenu -> {
+            is HomeNotesEvent.ToggleDropdownMenu -> {
                 _state.value = state.value.copy(
                     isDropdownMenuOpen = !state.value.isDropdownMenuOpen
                 )
