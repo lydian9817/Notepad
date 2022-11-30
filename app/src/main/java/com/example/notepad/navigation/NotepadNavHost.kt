@@ -34,7 +34,7 @@ fun NotepadNavHost(navController: NavHostController) {
                         launchSingleTop = true
                     }
                 },
-                homeViewModel = homeViewModel
+                viewModel = homeViewModel
             )
         }
         composable(
