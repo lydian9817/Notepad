@@ -32,7 +32,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun HomeScreen(
     onClickAddNote: () -> Unit = {},
-    onNoteClick: (String) -> Unit = {},
+    onNoteClick: (Int) -> Unit = {},
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     val state = viewModel.state.value
@@ -173,7 +173,7 @@ fun EmptyNoteList() {
 @Composable
 fun NoteList(
     notes: List<Note>,
-    onNoteClick: (String) -> Unit = {},
+    onNoteClick: (Int) -> Unit = {},
     onDelete: (Note) -> Unit = {}
 ) {
     LazyColumn {
@@ -182,7 +182,7 @@ fun NoteList(
                 note = note,
                 onDelete = onDelete,
                 modifier = Modifier.clickable {
-                    //TODO
+                    onNoteClick(note.id!!)
                 }
             )
         }
