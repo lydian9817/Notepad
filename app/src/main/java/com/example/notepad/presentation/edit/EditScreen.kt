@@ -1,61 +1,109 @@
 package com.example.notepad.presentation.edit
 
-import android.util.Log
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import android.annotation.SuppressLint
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Done
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.notepad.domain.model.Note
-import com.example.notepad.presentation.home.HomeViewModel
-import com.example.notepad.presentation.notes.TextNoteEdit
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.notepad.presentation.edit.components.HintTextField
+import kotlinx.coroutines.flow.collectLatest
 
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun EditScreen(
     onClickSaveNote: () -> Unit = {},
-    selectedNoteId: String?,
-    homeViewModel: HomeViewModel
+    viewModel: EditViewModel = hiltViewModel()
 ) {
+    val titleState = viewModel.noteTitle.value
+    val contentState = viewModel.noteContent.value
 
-    val isNoteValid =
-        homeViewModel.isNoteValid(homeViewModel.noteTitle, homeViewModel.noteContent)
+    val scaffoldState = rememberScaffoldState()
 
-    Log.i("selected id", "noteId es $selectedNoteId")
+    val scope = rememberCoroutineScope()
 
-    if (selectedNoteId != "noteId" && selectedNoteId != null) {
-        Log.i("to int", "es ${selectedNoteId.toInt()}")
-        val retrievedNote = homeViewModel.retrieveNote(selectedNoteId.toInt()).observeAsState()
-        homeViewModel.updateStates(retrievedNote as MutableState<Note?>)
+    //This only executes once, not at recompositions
+    LaunchedEffect(key1 = true) {
+        viewModel.eventFlow.collectLatest { event ->
+            when(event) {
+                is EditViewModel.UiEvent.ShowSnackbar -> {
+                    scaffoldState.snackbarHostState.showSnackbar(
+                        message = event.message
+                    )
+                }
+                is EditViewModel.UiEvent.SaveNote -> {
+                    onClickSaveNote()
+                }
+            }
+
+        }
     }
 
-    Column {
-        IconRow()
-        TextNoteEdit(
-            title = homeViewModel.noteTitle,
-            onTitleChange = { homeViewModel.updateNoteTitle(it) },
-            content = homeViewModel.noteContent,
-            onContentChange = { homeViewModel.updateNoteContent(it) }
-        )
-        Spacer(modifier = Modifier.height(30.dp))
-        SaveButton(onClickSave = onClickSaveNote, isEnabled = isNoteValid)
+    Scaffold(
+        topBar = { AppBar() },
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = {
+                    viewModel.onEvent(EditNoteEvent.SaveNote)
+                }
+            ) {
+                Icon(imageVector = Icons.Rounded.Done, contentDescription = "Save note")
+            }
+        },
+        scaffoldState = scaffoldState
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp)
+        ) {
+            HintTextField(
+                text = titleState.text,
+                hint = titleState.hint,
+                onValueChange = {
+                    viewModel.onEvent(EditNoteEvent.EnteredTitle(it))
+                },
+                onFocusChange = {
+                    viewModel.onEvent(EditNoteEvent.ChangeContentFocus(it))
+                },
+                isHintVisible = titleState.isHintVisible,
+                singleLine = true,
+                textStyle = MaterialTheme.typography.h5
+            )
+            
+            Spacer(modifier = Modifier.height(16.dp))
+
+            HintTextField(
+                text = contentState.text,
+                hint = contentState.hint,
+                onValueChange = {
+                    viewModel.onEvent(EditNoteEvent.EnteredContent(it))
+                },
+                onFocusChange = {
+                    viewModel.onEvent(EditNoteEvent.ChangeContentFocus(it))
+                },
+                isHintVisible = contentState.isHintVisible,
+                textStyle = MaterialTheme.typography.body1,
+                modifier = Modifier.fillMaxHeight()
+            )
+        }
     }
 }
 
+
 @Composable
-fun IconRow() {
+fun AppBar() {
     TopAppBar(
         navigationIcon = {
             IconButton(onClick = { /*TODO*/ }) {
                 Icon(
                     imageVector = Icons.Rounded.Done,
-                    contentDescription = "Save button",
+                    contentDescription = "",
                     modifier = Modifier.padding(horizontal = 12.dp)
                 )
             }
@@ -65,20 +113,3 @@ fun IconRow() {
         }
     )
 }
-
-@Composable
-fun SaveButton(onClickSave: () -> Unit, isEnabled: Boolean) {
-    Button(onClick = onClickSave, enabled = isEnabled) {
-        Text("Save Note")
-    }
-}
-
-/*
-@Preview
-@Composable
-fun EditScreenPreview() {
-    NotepadTheme() {
-        EditScreen()
-    }
-}
- */
