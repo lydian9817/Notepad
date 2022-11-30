@@ -61,7 +61,6 @@ class EditViewModel @Inject constructor(
                     }
                 }
             }
-
         }
     }
 
