@@ -69,7 +69,7 @@ fun EditScreen(
                     viewModel.onEvent(EditNoteEvent.EnteredTitle(it))
                 },
                 onFocusChange = {
-                    viewModel.onEvent(EditNoteEvent.ChangeContentFocus(it))
+                    viewModel.onEvent(EditNoteEvent.ChangeTitleFocus(it))
                 },
                 isHintVisible = titleState.isHintVisible,
                 singleLine = true,
