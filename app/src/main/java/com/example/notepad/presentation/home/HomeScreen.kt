@@ -199,7 +199,7 @@ fun NoteItem(
 ) {
     Surface() {
         Column(
-            modifier = Modifier
+            modifier = modifier
                 .padding(8.dp)
                 .fillMaxSize()
         ) {
