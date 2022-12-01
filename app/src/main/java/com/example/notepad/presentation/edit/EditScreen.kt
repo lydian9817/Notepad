@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.Done
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -18,6 +19,7 @@ import kotlinx.coroutines.flow.collectLatest
 @Composable
 fun EditScreen(
     onClickSaveNote: () -> Unit = {},
+    onClickBackButton: () -> Unit,
     viewModel: EditViewModel = hiltViewModel()
 ) {
     val titleState = viewModel.noteTitle.value
@@ -45,7 +47,9 @@ fun EditScreen(
     }
 
     Scaffold(
-        topBar = { AppBar() },
+        topBar = { AppBar(
+            onClickBackButton = onClickBackButton
+        ) },
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
@@ -97,12 +101,12 @@ fun EditScreen(
 
 
 @Composable
-fun AppBar() {
+fun AppBar(onClickBackButton:  () -> Unit) {
     TopAppBar(
         navigationIcon = {
-            IconButton(onClick = { /*TODO*/ }) {
+            IconButton(onClick = onClickBackButton) {
                 Icon(
-                    imageVector = Icons.Rounded.Done,
+                    imageVector = Icons.Rounded.ArrowBack,
                     contentDescription = "",
                     modifier = Modifier.padding(horizontal = 12.dp)
                 )

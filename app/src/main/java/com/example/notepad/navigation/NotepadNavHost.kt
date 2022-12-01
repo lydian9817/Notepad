@@ -24,7 +24,8 @@ fun NotepadNavHost(navController: NavHostController) {
                 onNoteClick = { id ->
                     navController.navigate(
                         Screen.EditScreen.route +
-                            "?noteId=$id")
+                                "?noteId=$id"
+                    )
                 }
             )
         }
@@ -43,6 +44,9 @@ fun NotepadNavHost(navController: NavHostController) {
         ) {
             EditScreen(
                 onClickSaveNote = {
+                    navController.navigateUp()
+                },
+                onClickBackButton = {
                     navController.navigateUp()
                 }
             )
