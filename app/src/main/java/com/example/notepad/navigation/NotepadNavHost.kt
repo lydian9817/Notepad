@@ -6,6 +6,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.example.notepad.presentation.edit.EditScreen
 import com.example.notepad.presentation.home.HomeScreen
 import com.example.notepad.presentation.util.Screen
 
@@ -40,7 +41,11 @@ fun NotepadNavHost(navController: NavHostController) {
                 }
             )
         ) {
-
+            EditScreen(
+                onClickSaveNote = {
+                    navController.navigateUp()
+                }
+            )
         }
     }
 }
