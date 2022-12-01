@@ -176,7 +176,9 @@ fun NoteList(
     onNoteClick: (Int) -> Unit = {},
     onDelete: (Note) -> Unit = {}
 ) {
-    LazyColumn {
+    LazyColumn(
+        modifier = Modifier.fillMaxSize()
+    ) {
         items(notes) { note ->
             NoteItem(
                 note = note,
@@ -197,7 +199,9 @@ fun NoteItem(
 ) {
     Surface() {
         Column(
-            modifier = Modifier.padding(8.dp)
+            modifier = Modifier
+                .padding(8.dp)
+                .fillMaxSize()
         ) {
             Text(
                 text = note.noteTitle,
