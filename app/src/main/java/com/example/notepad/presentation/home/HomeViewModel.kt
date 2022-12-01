@@ -28,8 +28,6 @@ class HomeViewModel @Inject constructor(
     private val _state = mutableStateOf(HomeState())
     val state: State<HomeState> = _state
 
-    val isListEmpty = _state.value.notes.isEmpty()
-
     //The recently deleted note reference, in order to restore it
     private var recentlyDeletedNote: Note? = null
 
@@ -69,7 +67,8 @@ class HomeViewModel @Inject constructor(
             is HomeNotesEvent.ToggleOrderDialog -> {
                 //copies the "ui side" value and invert it
                 _state.value = state.value.copy(
-                    isOrderDialogVisible = !state.value.isOrderDialogVisible
+                    isOrderDialogVisible = !state.value.isOrderDialogVisible,
+                    isDropdownMenuOpen = false
                 )
             }
             is HomeNotesEvent.ToggleDropdownMenu -> {
