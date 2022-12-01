@@ -205,7 +205,7 @@ fun NoteItem(
         ) {
             Text(
                 text = note.noteTitle,
-                style = MaterialTheme.typography.subtitle2
+                style = MaterialTheme.typography.h6
             )
             Text(
                 text = note.noteContent,
