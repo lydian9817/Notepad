@@ -1,13 +1,10 @@
 package com.example.notepad.presentation.edit
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.Done
 import androidx.compose.material3.*
-import androidx.compose.material3.Icon
-
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
@@ -18,7 +15,6 @@ import com.example.notepad.presentation.edit.components.HintTextField
 import kotlinx.coroutines.flow.collectLatest
 
 @OptIn(ExperimentalMaterial3Api::class)
-@SuppressLint("UnusedMaterialScaffoldPaddingParameter", "UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun EditScreen(
     onClickSaveNote: () -> Unit = {},
@@ -61,11 +57,11 @@ fun EditScreen(
             }
         },
         snackbarHost = { SnackbarHost(snackbarHostState) }
-    ) {
+    ) { padding ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(16.dp)
+                .padding(padding)
         ) {
             HintTextField(
                 text = titleState.text,

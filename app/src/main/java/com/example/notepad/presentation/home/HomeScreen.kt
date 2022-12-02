@@ -1,12 +1,8 @@
 package com.example.notepad.presentation.home
 
-import android.annotation.SuppressLint
 import android.widget.Toast
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
@@ -32,7 +28,6 @@ import com.example.notepad.presentation.notes.HomeNotesEvent
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")//evita el error de padding
 @Composable
 fun HomeScreen(
     onClickAddNote: () -> Unit = {},
@@ -59,12 +54,13 @@ fun HomeScreen(
             HomeFloatingActionButton(onClickAdd = onClickAddNote)
         },
         snackbarHost = { SnackbarHost(snackbarHostState) }
-    ) {
+    ) { padding ->
         //EmptyNoteList()
         if (state.notes.isEmpty()) {
             EmptyNoteList()
         } else {
             NoteList(
+                scaffoldPadding = padding,
                 notes = state.notes,
                 onNoteClick = onNoteClick,
                 onDelete = { note ->
@@ -177,12 +173,13 @@ fun EmptyNoteList() {
 
 @Composable
 fun NoteList(
+    scaffoldPadding: PaddingValues,
     notes: List<Note>,
     onNoteClick: (Int) -> Unit = {},
     onDelete: (Note) -> Unit = {}
 ) {
     LazyColumn(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize().padding(scaffoldPadding)
     ) {
         items(notes) { note ->
             NoteItem(
