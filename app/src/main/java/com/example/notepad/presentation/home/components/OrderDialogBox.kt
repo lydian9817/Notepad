@@ -3,17 +3,14 @@ package com.example.notepad.presentation.home.components
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
-import androidx.compose.material.Card
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.RadioButton
-import androidx.compose.material.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.Dialog
 import com.example.notepad.domain.util.NoteOrder
 import com.example.notepad.domain.util.OrderType
+import com.example.notepad.ui.theme.Shapes
 
 @Composable
 fun OrderDialogBox(
@@ -21,20 +18,33 @@ fun OrderDialogBox(
     noteOrder: NoteOrder = NoteOrder.Date(OrderType.Descending),
     onOrderChange: (NoteOrder) -> Unit
 ) {
-    Dialog(onDismissRequest = updateShowDialog) {
-        OrderDialogBoxUi(
-            noteOrder = noteOrder,
-            onOrderChange = onOrderChange
-        )
-    }
+    AlertDialog(
+        onDismissRequest = updateShowDialog,
+        confirmButton = {
+            TextButton(
+                onClick = {  /*TODO*/ },
+            ) {
+                Text(text = "Confirm")
+            }
+        },
+        text = {
+            OrderDialogBoxUi(
+                noteOrder = noteOrder,
+                onOrderChange = onOrderChange
+            )
+        }
+    )
 }
+
 
 @Composable
 fun OrderDialogBoxUi(
     noteOrder: NoteOrder = NoteOrder.Date(OrderType.Descending),
     onOrderChange: (NoteOrder) -> Unit
 ) {
-    Card() {
+    Card(
+        shape = Shapes.medium
+    ) {
         Column {
             Text(text = "Sort by")
             Spacer(modifier = Modifier.height(8.dp))
@@ -57,7 +67,7 @@ fun OrderDialogBoxUi(
                 DefaultRadioButton(
                     text = "Ascending",
                     selected = noteOrder.orderType is OrderType.Ascending,
-                    onSelect = {onOrderChange(noteOrder.copy(OrderType.Ascending)) }
+                    onSelect = { onOrderChange(noteOrder.copy(OrderType.Ascending)) }
                 )
                 DefaultRadioButton(
                     text = "Descending",
@@ -88,7 +98,7 @@ fun DefaultRadioButton(
         )
         Text(
             text = text,
-            style = MaterialTheme.typography.body1.merge(),
+            style = MaterialTheme.typography.bodyLarge,
             modifier = Modifier.padding(start = 16.dp)
         )
     }
