@@ -10,6 +10,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Add
+import androidx.compose.material.icons.rounded.Delete
+import androidx.compose.material.icons.rounded.Menu
+import androidx.compose.material.icons.rounded.MoreVert
 import androidx.compose.material3.*
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -114,7 +119,7 @@ fun AppBar(
             //Box {
             IconButton(onClick = updateShowMenu) {
                 Icon(
-                    imageVector = Icon
+                    imageVector = Icons.Rounded.MoreVert,
                     contentDescription = "settings icon",
                     modifier = Modifier.padding(horizontal = 12.dp)
                 )
