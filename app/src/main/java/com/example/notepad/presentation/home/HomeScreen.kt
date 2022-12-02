@@ -10,13 +10,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Add
-import androidx.compose.material.icons.rounded.Delete
-import androidx.compose.material.icons.rounded.Menu
-import androidx.compose.material.icons.rounded.MoreVert
+import androidx.compose.material3.*
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -28,7 +26,8 @@ import com.example.notepad.presentation.home.components.OrderDialogBox
 import com.example.notepad.presentation.notes.HomeNotesEvent
 import kotlinx.coroutines.launch
 
-@SuppressLint("UnusedMaterialScaffoldPaddingParameter")//evita el error de padding
+@OptIn(ExperimentalMaterial3Api::class)
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")//evita el error de padding
 @Composable
 fun HomeScreen(
     onClickAddNote: () -> Unit = {},
@@ -36,7 +35,7 @@ fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     val state = viewModel.state.value
-    val scaffoldState = rememberScaffoldState()
+    val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
 
     Scaffold(
@@ -54,7 +53,7 @@ fun HomeScreen(
         floatingActionButton = {
             HomeFloatingActionButton(onClickAdd = onClickAddNote)
         },
-        scaffoldState = scaffoldState
+        snackbarHost = { SnackbarHost(snackbarHostState) }
     ) {
         //EmptyNoteList()
         if (state.notes.isEmpty()) {
@@ -67,7 +66,7 @@ fun HomeScreen(
                     viewModel.onEvent(HomeNotesEvent.DeleteNote(note))
                     //Snack bars should be launched from a coroutine
                     scope.launch {
-                        val result = scaffoldState.snackbarHostState.showSnackbar(
+                        val result = snackbarHostState.showSnackbar(
                             message = "Note Deleted",
                             actionLabel = "Undo"
                         )
@@ -89,6 +88,7 @@ fun HomeScreen(
 
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AppBar(
     updateShowMenu: () -> Unit,
@@ -114,7 +114,7 @@ fun AppBar(
             //Box {
             IconButton(onClick = updateShowMenu) {
                 Icon(
-                    imageVector = Icons.Rounded.MoreVert,
+                    imageVector = Icon
                     contentDescription = "settings icon",
                     modifier = Modifier.padding(horizontal = 12.dp)
                 )
@@ -133,13 +133,13 @@ fun AppBar(
                             "Toast",
                             Toast.LENGTH_SHORT
                         ).show()
-                    }
-                ) {
-                    Text(text = "Toast")
-                }
-                DropdownMenuItem(onClick = updateShowDialog) {
-                    Text(text = "Sort by")
-                }
+                    },
+                    text = { Text(text = "Toast") }
+                )
+                DropdownMenuItem(
+                    onClick = updateShowDialog,
+                    text = { Text(text = "Sort by") }
+                )
             }
         }
     )
@@ -152,7 +152,7 @@ fun HomeFloatingActionButton(onClickAdd: () -> Unit) {
         shape = CircleShape,
         onClick = onClickAdd
     ) {
-        Icon(imageVector = Icons.Rounded.Add, contentDescription = "Add Note")
+        Icon(Icons.Rounded.Add, contentDescription = "Add Note")
     }
 }
 
@@ -165,7 +165,7 @@ fun EmptyNoteList() {
     ) {
         Text(
             text = "Tap + to write a new note!",
-            style = MaterialTheme.typography.h6,
+            style = MaterialTheme.typography.titleLarge,
         )
     }
 }
@@ -205,11 +205,11 @@ fun NoteItem(
         ) {
             Text(
                 text = note.noteTitle,
-                style = MaterialTheme.typography.h6
+                style = MaterialTheme.typography.titleLarge
             )
             Text(
                 text = note.noteContent,
-                style = MaterialTheme.typography.body2
+                style = MaterialTheme.typography.bodyMedium
             )
             IconButton(
                 onClick = { onDelete(note) },
