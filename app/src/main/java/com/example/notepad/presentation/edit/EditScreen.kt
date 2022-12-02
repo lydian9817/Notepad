@@ -2,12 +2,13 @@ package com.example.notepad.presentation.edit
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.ArrowBack
-import androidx.compose.material.icons.rounded.Done
+import androidx.compose.material3.*
+import androidx.compose.material3.Icon
+import androidx.compose.material3.icons.rounded.ArrowBack
+import androidx.compose.material3.icons.rounded.Done
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -15,7 +16,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.notepad.presentation.edit.components.HintTextField
 import kotlinx.coroutines.flow.collectLatest
 
-@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
+@OptIn(ExperimentalMaterial3Api::class)
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter", "UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun EditScreen(
     onClickSaveNote: () -> Unit = {},
@@ -25,16 +27,14 @@ fun EditScreen(
     val titleState = viewModel.noteTitle.value
     val contentState = viewModel.noteContent.value
 
-    val scaffoldState = rememberScaffoldState()
-
-    val scope = rememberCoroutineScope()
+    val snackbarHostState = remember { SnackbarHostState() }
 
     //This only executes once, not at recompositions
     LaunchedEffect(key1 = true) {
         viewModel.eventFlow.collectLatest { event ->
             when(event) {
                 is EditViewModel.UiEvent.ShowSnackbar -> {
-                    scaffoldState.snackbarHostState.showSnackbar(
+                    snackbarHostState.showSnackbar(
                         message = event.message
                     )
                 }
@@ -59,7 +59,7 @@ fun EditScreen(
                 Icon(imageVector = Icons.Rounded.Done, contentDescription = "Save note")
             }
         },
-        scaffoldState = scaffoldState
+        snackbarHost = { SnackbarHost(snackbarHostState) }
     ) {
         Column(
             modifier = Modifier
@@ -77,7 +77,7 @@ fun EditScreen(
                 },
                 isHintVisible = titleState.isHintVisible,
                 singleLine = true,
-                textStyle = MaterialTheme.typography.h5
+                textStyle = MaterialTheme.typography.headlineSmall
             )
             
             Spacer(modifier = Modifier.height(16.dp))
@@ -92,7 +92,7 @@ fun EditScreen(
                     viewModel.onEvent(EditNoteEvent.ChangeContentFocus(it))
                 },
                 isHintVisible = contentState.isHintVisible,
-                textStyle = MaterialTheme.typography.body1,
+                textStyle = MaterialTheme.typography.bodyLarge,
                 modifier = Modifier.fillMaxHeight()
             )
         }
@@ -100,6 +100,7 @@ fun EditScreen(
 }
 
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AppBar(onClickBackButton:  () -> Unit) {
     TopAppBar(
