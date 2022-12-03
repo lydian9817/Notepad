@@ -112,7 +112,6 @@ fun AppBar(
             Text("Home Screen")
         },
         actions = {
-            //Box {
             IconButton(onClick = updateShowMenu) {
                 Icon(
                     imageVector = Icons.Rounded.MoreVert,
@@ -121,7 +120,6 @@ fun AppBar(
                 )
 
             }
-            //}
             DropdownMenu(
                 expanded = isMenuOpen,
                 onDismissRequest = updateShowMenu,
