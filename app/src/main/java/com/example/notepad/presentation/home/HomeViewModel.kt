@@ -46,7 +46,10 @@ class HomeViewModel @Inject constructor(
                 //compares de class used by the ui to the event one. The order changes according
                 //to that comparison. For example, if the order and order type are equals,
                 // nothing is done (return)
-                if (state.value.noteOrder::class == event.noteOrder::class && state.value.noteOrder.orderType::class == event.noteOrder.orderType::class) {
+                if (
+                    state.value.noteOrder::class == event.noteOrder::class &&
+                    state.value.noteOrder.orderType::class == event.noteOrder.orderType::class
+                ) {
                     return
                 }
                 getNotes(event.noteOrder)
