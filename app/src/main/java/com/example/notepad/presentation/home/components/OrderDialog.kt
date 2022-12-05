@@ -13,7 +13,7 @@ import com.example.notepad.domain.util.OrderType
 import com.example.notepad.ui.theme.Shapes
 
 @Composable
-fun OrderDialogBox(
+fun OrderDialog(
     updateShowDialog: () -> Unit,
     noteOrder: NoteOrder = NoteOrder.Date(OrderType.Descending),
     onOrderChange: (NoteOrder) -> Unit

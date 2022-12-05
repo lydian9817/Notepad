@@ -23,7 +23,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.notepad.domain.model.Note
-import com.example.notepad.presentation.home.components.OrderDialogBox
+import com.example.notepad.presentation.home.components.OrderDialog
 import com.example.notepad.presentation.notes.HomeNotesEvent
 import kotlinx.coroutines.launch
 
@@ -79,7 +79,7 @@ fun HomeScreen(
             )
         }
         if (state.isOrderDialogVisible) {
-            OrderDialogBox(
+            OrderDialog(
                 updateShowDialog = { viewModel.onEvent(HomeNotesEvent.ToggleOrderDialog) },
                 noteOrder = state.noteOrder,
                 onOrderChange = {
