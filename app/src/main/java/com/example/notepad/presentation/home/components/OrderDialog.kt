@@ -28,6 +28,13 @@ fun OrderDialog(
                 Text(text = "Confirm")
             }
         },
+        dismissButton = {
+            TextButton(
+                onClick = updateShowDialog,
+            ) {
+                Text(text = "Cancel")
+            }
+        },
         text = {
             Card(
                 shape = Shapes.medium
