@@ -4,7 +4,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
@@ -18,65 +18,60 @@ fun OrderDialogBox(
     noteOrder: NoteOrder = NoteOrder.Date(OrderType.Descending),
     onOrderChange: (NoteOrder) -> Unit
 ) {
+    var selectedOrder by remember  { mutableStateOf(noteOrder) }
     AlertDialog(
         onDismissRequest = updateShowDialog,
         confirmButton = {
             TextButton(
-                onClick = {  /*TODO*/ },
+                onClick = {  onOrderChange(selectedOrder) },
             ) {
                 Text(text = "Confirm")
             }
         },
         text = {
-            OrderDialogBoxUi(
-                noteOrder = noteOrder,
-                onOrderChange = onOrderChange
-            )
+            Card(
+                shape = Shapes.medium
+            ) {
+                Column {
+                    Text(text = "Sort by")
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Column(Modifier.selectableGroup()) {
+                        DefaultRadioButton(
+                            text = "Title",
+                            selected = selectedOrder is NoteOrder.Title,
+                            onSelect = {
+                                selectedOrder = NoteOrder.Title(selectedOrder.orderType)
+
+                            }
+                        )
+                        DefaultRadioButton(
+                            text = "Date",
+                            selected = selectedOrder is NoteOrder.Date,
+                            onSelect = {
+                                selectedOrder = NoteOrder.Date(selectedOrder.orderType)
+
+                            }
+                        )
+                    }
+
+                    Text(text = "Order")
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Column(Modifier.selectableGroup()) {
+                        DefaultRadioButton(
+                            text = "Ascending",
+                            selected = selectedOrder.orderType is OrderType.Ascending,
+                            onSelect = { selectedOrder = selectedOrder.copy(OrderType.Ascending) }
+                        )
+                        DefaultRadioButton(
+                            text = "Descending",
+                            selected = selectedOrder.orderType is OrderType.Descending,
+                            onSelect = { selectedOrder = selectedOrder.copy(OrderType.Descending) }
+                        )
+                    }
+                }
+            }
         }
     )
-}
-
-
-@Composable
-fun OrderDialogBoxUi(
-    noteOrder: NoteOrder = NoteOrder.Date(OrderType.Descending),
-    onOrderChange: (NoteOrder) -> Unit
-) {
-    Card(
-        shape = Shapes.medium
-    ) {
-        Column {
-            Text(text = "Sort by")
-            Spacer(modifier = Modifier.height(8.dp))
-            Column(Modifier.selectableGroup()) {
-                DefaultRadioButton(
-                    text = "Title",
-                    selected = noteOrder is NoteOrder.Title,
-                    onSelect = { onOrderChange(NoteOrder.Title(noteOrder.orderType)) }
-                )
-                DefaultRadioButton(
-                    text = "Date",
-                    selected = noteOrder is NoteOrder.Date,
-                    onSelect = { onOrderChange(NoteOrder.Date(noteOrder.orderType)) }
-                )
-            }
-
-            Text(text = "Order")
-            Spacer(modifier = Modifier.height(8.dp))
-            Column(Modifier.selectableGroup()) {
-                DefaultRadioButton(
-                    text = "Ascending",
-                    selected = noteOrder.orderType is OrderType.Ascending,
-                    onSelect = { onOrderChange(noteOrder.copy(OrderType.Ascending)) }
-                )
-                DefaultRadioButton(
-                    text = "Descending",
-                    selected = noteOrder.orderType is OrderType.Descending,
-                    onSelect = { onOrderChange(noteOrder.copy(OrderType.Descending)) }
-                )
-            }
-        }
-    }
 }
 
 @Composable
