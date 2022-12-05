@@ -1,6 +1,5 @@
 package com.example.notepad.presentation.home
 
-import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -12,14 +11,11 @@ import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.material.icons.rounded.Menu
 import androidx.compose.material.icons.rounded.MoreVert
 import androidx.compose.material3.*
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.notepad.domain.model.Note
@@ -99,7 +95,6 @@ fun AppBar(
     isMenuOpen: Boolean,
     updateShowDialog: () -> Unit
 ) {
-    val context = LocalContext.current
     TopAppBar(
         navigationIcon = {
             IconButton(onClick = { /*TODO*/ }) {
@@ -128,16 +123,6 @@ fun AppBar(
                 onDismissRequest = updateShowMenu,
                 modifier = Modifier.padding(5.dp)
             ) {
-                DropdownMenuItem(
-                    onClick = {
-                        Toast.makeText(
-                            context,
-                            "Toast",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    },
-                    text = { Text(text = "Toast") }
-                )
                 DropdownMenuItem(
                     onClick = updateShowDialog,
                     text = { Text(text = "Sort by") }
