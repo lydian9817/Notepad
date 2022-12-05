@@ -1,6 +1,7 @@
 package com.example.notepad.presentation.home
 
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -85,7 +86,6 @@ fun HomeScreen(
             )
         }
     }
-
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -104,7 +104,6 @@ fun AppBar(
                     modifier = Modifier.padding(horizontal = 12.dp)
                 )
             }
-
         },
         title = {
             Text("Home Screen")
@@ -116,7 +115,6 @@ fun AppBar(
                     contentDescription = "settings icon",
                     modifier = Modifier.padding(horizontal = 12.dp)
                 )
-
             }
             DropdownMenu(
                 expanded = isMenuOpen,
@@ -157,6 +155,7 @@ fun EmptyNoteList() {
     }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun NoteList(
     scaffoldPadding: PaddingValues,
@@ -171,9 +170,10 @@ fun NoteList(
             NoteItem(
                 note = note,
                 onDelete = onDelete,
-                modifier = Modifier.clickable {
-                    onNoteClick(note.id!!)
-                }
+                modifier = Modifier.combinedClickable(
+                    onClick = { onNoteClick(note.id!!) },
+                    onLongClick = { /**/ }
+                )
             )
         }
     }
