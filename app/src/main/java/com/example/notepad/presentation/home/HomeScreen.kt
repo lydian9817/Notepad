@@ -82,7 +82,10 @@ fun HomeScreen(
             OrderDialogBox(
                 updateShowDialog = { viewModel.onEvent(HomeNotesEvent.ToggleOrderDialog) },
                 noteOrder = state.noteOrder,
-                onOrderChange = { viewModel.onEvent(HomeNotesEvent.Order(it)) }
+                onOrderChange = {
+                    viewModel.onEvent(HomeNotesEvent.Order(it))
+                    viewModel.onEvent(HomeNotesEvent.ToggleOrderDialog)
+                }
             )
         }
     }
