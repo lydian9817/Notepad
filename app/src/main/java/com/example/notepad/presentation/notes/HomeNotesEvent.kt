@@ -9,5 +9,5 @@ sealed class HomeNotesEvent {
     object RestoreNote: HomeNotesEvent()
     object ToggleOrderDialog: HomeNotesEvent()
     object ToggleDropdownMenu: HomeNotesEvent()
-    object SelectNote: HomeNotesEvent()
+    object ToggleNoteSelection: HomeNotesEvent()
 }
