@@ -172,14 +172,19 @@ fun NoteList(
             .padding(scaffoldPadding)
     ) {
         items(notes) { note ->
-            NoteItem(
-                note = note,
-                onDelete = onDelete,
-                modifier = Modifier.combinedClickable(
-                    onClick = { onNoteClick(note.id!!) },
-                    onLongClick = { /**/ }
+            Row(
+                modifier = Modifier.padding(horizontal = 16.dp)
+            ) {
+
+                NoteItem(
+                    note = note,
+                    onDelete = onDelete,
+                    modifier = Modifier.combinedClickable(
+                        onClick = { onNoteClick(note.id!!) },
+                        onLongClick = { /**/ }
+                    )
                 )
-            )
+            }
         }
     }
 }
