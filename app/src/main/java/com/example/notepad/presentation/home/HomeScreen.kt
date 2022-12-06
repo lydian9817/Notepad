@@ -85,9 +85,10 @@ fun HomeScreen(
                     }
                 },
                 onLongClick = { viewModel.onEvent(HomeNotesEvent.ToggleNoteSelection) },
-                isNoteSelected = state.isNoteSelectionActivated
+                isNoteSelectionActivated = state.isNoteSelectionActivated
             )
         }
+
         if (state.isOrderDialogVisible) {
             OrderDialog(
                 updateShowDialog = { viewModel.onEvent(HomeNotesEvent.ToggleOrderDialog) },
@@ -176,7 +177,7 @@ fun NoteList(
     onNoteClick: (Int) -> Unit = {},
     onDelete: (Note) -> Unit = {},
     onLongClick: () -> Unit,
-    isNoteSelected: Boolean
+    isNoteSelectionActivated: Boolean
 ) {
     LazyColumn(
         modifier = Modifier
@@ -187,7 +188,7 @@ fun NoteList(
             Row(
                 modifier = Modifier.padding(horizontal = 16.dp)
             ) {
-                if (isNoteSelected) {
+                if (isNoteSelectionActivated) {
                     SelectCircle()
                     Spacer(modifier = Modifier.width(16.dp))
                 }
