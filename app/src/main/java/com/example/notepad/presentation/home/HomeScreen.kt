@@ -24,6 +24,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.notepad.domain.model.Note
 import com.example.notepad.presentation.home.components.OrderDialog
+import com.example.notepad.presentation.home.components.SelectCircle
+import com.example.notepad.presentation.home.components.SelectedNoteAppBar
 import com.example.notepad.presentation.notes.HomeNotesEvent
 import kotlinx.coroutines.launch
 
@@ -40,15 +42,19 @@ fun HomeScreen(
 
     Scaffold(
         topBar = {
-            AppBar(
-                isMenuOpen = state.isDropdownMenuOpen,
-                updateShowMenu = {
-                    viewModel.onEvent(HomeNotesEvent.ToggleDropdownMenu)
-                },
-                updateShowDialog = {
-                    viewModel.onEvent(HomeNotesEvent.ToggleOrderDialog)
-                }
-            )
+            if (state.isNoteSelected) {
+                SelectedNoteAppBar()
+            } else {
+                AppBar(
+                    isMenuOpen = state.isDropdownMenuOpen,
+                    updateShowMenu = {
+                        viewModel.onEvent(HomeNotesEvent.ToggleDropdownMenu)
+                    },
+                    updateShowDialog = {
+                        viewModel.onEvent(HomeNotesEvent.ToggleOrderDialog)
+                    }
+                )
+            }
         },
         floatingActionButton = {
             HomeFloatingActionButton(onClickAdd = onClickAddNote)
@@ -75,7 +81,9 @@ fun HomeScreen(
                             viewModel.onEvent(HomeNotesEvent.RestoreNote)
                         }
                     }
-                }
+                },
+                onLongClick = { viewModel.onEvent(HomeNotesEvent.SelectNote) },
+                isNoteSelected = state.isNoteSelected
             )
         }
         if (state.isOrderDialogVisible) {
@@ -164,7 +172,9 @@ fun NoteList(
     scaffoldPadding: PaddingValues,
     notes: List<Note>,
     onNoteClick: (Int) -> Unit = {},
-    onDelete: (Note) -> Unit = {}
+    onDelete: (Note) -> Unit = {},
+    onLongClick: () -> Unit,
+    isNoteSelected: Boolean
 ) {
     LazyColumn(
         modifier = Modifier
@@ -175,13 +185,16 @@ fun NoteList(
             Row(
                 modifier = Modifier.padding(horizontal = 16.dp)
             ) {
-
+                if (isNoteSelected) {
+                    SelectCircle()
+                    Spacer(modifier = Modifier.width(16.dp))
+                }
                 NoteItem(
                     note = note,
                     onDelete = onDelete,
                     modifier = Modifier.combinedClickable(
                         onClick = { onNoteClick(note.id!!) },
-                        onLongClick = { /**/ }
+                        onLongClick = onLongClick
                     )
                 )
             }
