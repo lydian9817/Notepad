@@ -79,6 +79,11 @@ class HomeViewModel @Inject constructor(
                     isDropdownMenuOpen = !state.value.isDropdownMenuOpen
                 )
             }
+            is HomeNotesEvent.SelectNote -> {
+                _state.value = state.value.copy(
+                    isNoteSelected = !state.value.isNoteSelected
+                )
+            }
         }
     }
 

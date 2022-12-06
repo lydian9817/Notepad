@@ -8,5 +8,6 @@ data class HomeState(
     val notes: List<Note> = emptyList(),
     val noteOrder: NoteOrder = NoteOrder.Date(OrderType.Descending), //default order
     val isOrderDialogVisible: Boolean = false,
-    val isDropdownMenuOpen: Boolean = false
+    val isDropdownMenuOpen: Boolean = false,
+    val isNoteSelected: Boolean = false
 )
