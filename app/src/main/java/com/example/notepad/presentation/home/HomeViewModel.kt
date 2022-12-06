@@ -81,7 +81,7 @@ class HomeViewModel @Inject constructor(
             }
             is HomeNotesEvent.ToggleNoteSelection -> {
                 _state.value = state.value.copy(
-                    isNoteSelected = !state.value.isNoteSelected
+                    isNoteSelectionActivated = !state.value.isNoteSelectionActivated
                 )
             }
         }
