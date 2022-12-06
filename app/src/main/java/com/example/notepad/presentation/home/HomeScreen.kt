@@ -43,7 +43,9 @@ fun HomeScreen(
     Scaffold(
         topBar = {
             if (state.isNoteSelected) {
-                SelectedNoteAppBar()
+                SelectedNoteAppBar(
+                    onCloseClick = { viewModel.onEvent(HomeNotesEvent.ToggleNoteSelection) }
+                )
             } else {
                 AppBar(
                     isMenuOpen = state.isDropdownMenuOpen,
@@ -82,7 +84,7 @@ fun HomeScreen(
                         }
                     }
                 },
-                onLongClick = { viewModel.onEvent(HomeNotesEvent.SelectNote) },
+                onLongClick = { viewModel.onEvent(HomeNotesEvent.ToggleNoteSelection) },
                 isNoteSelected = state.isNoteSelected
             )
         }
