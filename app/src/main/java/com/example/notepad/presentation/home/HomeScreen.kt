@@ -1,5 +1,6 @@
 package com.example.notepad.presentation.home
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
@@ -17,6 +18,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.notepad.domain.model.Note
@@ -164,7 +167,9 @@ fun NoteList(
     onDelete: (Note) -> Unit = {}
 ) {
     LazyColumn(
-        modifier = Modifier.fillMaxSize().padding(scaffoldPadding)
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(scaffoldPadding)
     ) {
         items(notes) { note ->
             NoteItem(
@@ -185,7 +190,12 @@ fun NoteItem(
     onDelete: (Note) -> Unit,
     modifier: Modifier
 ) {
-    Surface() {
+    Surface(
+        border = BorderStroke(
+            width = Dp.Hairline,
+            color = Color.Black
+        )
+    ) {
         Column(
             modifier = modifier
                 .padding(8.dp)
