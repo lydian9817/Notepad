@@ -196,7 +196,13 @@ fun NoteList(
                     note = note,
                     onDelete = onDelete,
                     modifier = Modifier.combinedClickable(
-                        onClick = { onNoteClick(note.id!!) },
+                        onClick = {
+                            if (isNoteSelectionActivated) {
+                                /*TODO*/
+                            } else {
+                                onNoteClick(note.id!!)
+                            }
+                        },
                         onLongClick = onLongClick
                     )
                 )
