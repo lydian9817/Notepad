@@ -84,6 +84,13 @@ class HomeViewModel @Inject constructor(
                     isNoteSelectionActivated = !state.value.isNoteSelectionActivated
                 )
             }
+            is HomeNotesEvent.SelectOrUnselectNote -> {
+                if (_state.value.notesToBeDeleted.contains(event.note)) {
+                    _state.value.notesToBeDeleted.remove(event.note)
+                } else {
+                    _state.value.notesToBeDeleted.add(event.note)
+                }
+            }
         }
     }
 
