@@ -6,7 +6,7 @@ import com.example.notepad.domain.util.OrderType
 
 data class HomeState(
     val notes: List<Note> = emptyList(),
-    val notesToBeDeleted: List<Note> = emptyList(),
+    val notesToBeDeleted: MutableList<Note>,
     val noteOrder: NoteOrder = NoteOrder.Date(OrderType.Descending), //default order
     val isOrderDialogVisible: Boolean = false,
     val isDropdownMenuOpen: Boolean = false,
