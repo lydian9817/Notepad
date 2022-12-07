@@ -88,7 +88,10 @@ fun HomeScreen(
                     }
                 },
                 onLongClick = { viewModel.onEvent(HomeNotesEvent.ToggleNoteSelection) },
-                isNoteSelectionActivated = state.isNoteSelectionActivated
+                isNoteSelectionActivated = state.isNoteSelectionActivated,
+                selectCircleColor = { note ->
+                    viewModel.changeCircleColor(note)
+                }
             )
         }
 
@@ -181,7 +184,8 @@ fun NoteList(
     onSelectNote: (Note) -> Unit,
     onDelete: (Note) -> Unit = {},
     onLongClick: () -> Unit,
-    isNoteSelectionActivated: Boolean
+    isNoteSelectionActivated: Boolean,
+    selectCircleColor: (Note) -> Color
 ) {
     LazyColumn(
         modifier = Modifier
@@ -193,7 +197,9 @@ fun NoteList(
                 modifier = Modifier.padding(horizontal = 16.dp)
             ) {
                 if (isNoteSelectionActivated) {
-                    SelectCircle()
+                    SelectCircle(
+                        color = selectCircleColor(note)
+                    )
                     Spacer(modifier = Modifier.width(16.dp))
                 }
                 NoteItem(

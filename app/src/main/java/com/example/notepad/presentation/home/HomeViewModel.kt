@@ -2,6 +2,7 @@ package com.example.notepad.presentation.home
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.notepad.domain.model.Note
@@ -85,7 +86,7 @@ class HomeViewModel @Inject constructor(
                 )
             }
             is HomeNotesEvent.SelectOrUnselectNote -> {
-                if (_state.value.notesToBeDeleted.contains(event.note)) {
+                if (state.value.notesToBeDeleted.contains(event.note)) {
                     _state.value.notesToBeDeleted.remove(event.note)
                 } else {
                     _state.value.notesToBeDeleted.add(event.note)
@@ -104,5 +105,13 @@ class HomeViewModel @Inject constructor(
                 notes = notes, noteOrder = noteOrder
             )
         }.launchIn(viewModelScope)
+    }
+
+    fun changeCircleColor(note: Note): Color {
+        return if (_state.value.notesToBeDeleted.contains(note)) {
+            Color.Red
+        } else {
+            Color.Gray
+        }
     }
 }
