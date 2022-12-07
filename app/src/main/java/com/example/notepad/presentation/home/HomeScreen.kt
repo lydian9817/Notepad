@@ -71,6 +71,9 @@ fun HomeScreen(
                 scaffoldPadding = padding,
                 notes = state.notes,
                 onNoteClick = onNoteClick,
+                onSelectNote = { note ->
+                    viewModel.onEvent(HomeNotesEvent.SelectOrUnselectNote(note))
+                },
                 onDelete = { note ->
                     viewModel.onEvent(HomeNotesEvent.DeleteNote(note))
                     //Snack bars should be launched from a coroutine
@@ -175,6 +178,7 @@ fun NoteList(
     scaffoldPadding: PaddingValues,
     notes: List<Note>,
     onNoteClick: (Int) -> Unit = {},
+    onSelectNote: (Note) -> Unit,
     onDelete: (Note) -> Unit = {},
     onLongClick: () -> Unit,
     isNoteSelectionActivated: Boolean
@@ -198,7 +202,7 @@ fun NoteList(
                     modifier = Modifier.combinedClickable(
                         onClick = {
                             if (isNoteSelectionActivated) {
-                                /*TODO*/
+                                onSelectNote(note)
                             } else {
                                 onNoteClick(note.id!!)
                             }
