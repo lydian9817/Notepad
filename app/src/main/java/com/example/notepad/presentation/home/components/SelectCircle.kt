@@ -12,7 +12,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun SelectCircle() {
+fun SelectCircle(
+    color: Color
+) {
     Box(
         modifier = Modifier.height(24.dp).width(24.dp)
     ) {
@@ -20,7 +22,7 @@ fun SelectCircle() {
             val canvasWidth = size.width
             val canvasHeight = size.height
             drawCircle(
-                color = Color.Gray,
+                color = color,
                 center = Offset(x = canvasWidth / 2, y = canvasHeight / 2),
                 radius = canvasWidth / 2
             )
