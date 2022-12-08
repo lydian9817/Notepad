@@ -70,8 +70,8 @@ fun HomeScreen(
                 },
                 onLongClick = { viewModel.onEvent(HomeNotesEvent.ToggleNoteSelection) },
                 isNoteSelectionActivated = state.isNoteSelectionActivated,
-                selectCircleColor = { note ->
-                    viewModel.changeCircleColor(note)
+                isNoteSelected = { note ->
+                    state.notesToBeDeleted.contains(note)
                 }
             )
         }

@@ -7,7 +7,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.notepad.domain.model.Note
 
@@ -21,7 +20,7 @@ fun NoteList(
     onDelete: (Note) -> Unit = {},
     onLongClick: () -> Unit,
     isNoteSelectionActivated: Boolean,
-    selectCircleColor: (Note) -> Color
+    isNoteSelected: (Note) -> Boolean
 ) {
     LazyColumn(
         modifier = Modifier
@@ -45,7 +44,7 @@ fun NoteList(
             ) {
                 if (isNoteSelectionActivated) {
                     SelectCircle(
-                        color = selectCircleColor(note)
+                        isNoteSelected = isNoteSelected(note)
                     )
                     Spacer(modifier = Modifier.width(16.dp))
                 }
