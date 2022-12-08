@@ -30,7 +30,18 @@ fun NoteList(
     ) {
         items(notes) { note ->
             Row(
-                modifier = Modifier.padding(horizontal = 16.dp)
+                modifier = Modifier
+                    .padding(horizontal = 16.dp)
+                    .combinedClickable(
+                        onClick = {
+                            if (isNoteSelectionActivated) {
+                                onSelectNote(note)
+                            } else {
+                                onNoteClick(note.id!!)
+                            }
+                        },
+                        onLongClick = onLongClick
+                    )
             ) {
                 if (isNoteSelectionActivated) {
                     SelectCircle(
@@ -41,16 +52,7 @@ fun NoteList(
                 NoteItem(
                     note = note,
                     onDelete = onDelete,
-                    modifier = Modifier.combinedClickable(
-                        onClick = {
-                            if (isNoteSelectionActivated) {
-                                onSelectNote(note)
-                            } else {
-                                onNoteClick(note.id!!)
-                            }
-                        },
-                        onLongClick = onLongClick
-                    )
+                    modifier = Modifier
                 )
             }
         }

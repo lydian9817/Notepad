@@ -19,7 +19,7 @@ import com.example.notepad.domain.model.Note
 fun NoteItem(
     note: Note,
     onDelete: (Note) -> Unit,
-    modifier: Modifier
+    modifier: Modifier = Modifier
 ) {
     Surface(
         border = BorderStroke(
