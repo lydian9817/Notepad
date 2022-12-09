@@ -1,5 +1,6 @@
 package com.example.notepad.presentation.home.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
@@ -26,13 +27,22 @@ fun SelectCircle(
             Icon(
                 imageVector = Icons.Rounded.CheckCircle,
                 contentDescription = "note selected",
-                tint = Color.Green
+                tint = Color.Green,
+                modifier = Modifier.clickable(
+                    enabled = false,
+                    onClick = {}
+                )
             )
         } else {
             Icon(
                 painter = painterResource(
                     id = R.drawable.ic_baseline_circle_24
-                ), contentDescription = "note is not selected"
+                ),
+                contentDescription = "note is not selected",
+                modifier = Modifier.clickable(
+                    enabled = false,
+                    onClick = {}
+                )
             )
         }
 
