@@ -13,7 +13,8 @@ import androidx.compose.ui.unit.dp
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SelectedNoteAppBar(
-    onCloseClick: () -> Unit
+    onCloseClick: () -> Unit,
+    onDeleteClick: () -> Unit
 ) {
     TopAppBar(
         navigationIcon = {
@@ -31,7 +32,7 @@ fun SelectedNoteAppBar(
             Text("Selected")
         },
         actions = {
-            IconButton(onClick = { /*TODO*/ }) {
+            IconButton(onClick = onDeleteClick) {
                 Icon(
                     imageVector = Icons.Rounded.Delete,
                     contentDescription = "Delete Selected notes",

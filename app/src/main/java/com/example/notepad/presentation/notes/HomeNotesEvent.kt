@@ -5,7 +5,7 @@ import com.example.notepad.domain.util.NoteOrder
 
 sealed class HomeNotesEvent {
     data class Order(val noteOrder: NoteOrder): HomeNotesEvent()
-    data class DeleteNote(val note: Note): HomeNotesEvent()
+    data class DeleteNotes(val notes: List<Note>): HomeNotesEvent()
     data class SelectOrUnselectNote(val note: Note): HomeNotesEvent()
     object RestoreNote: HomeNotesEvent()
     object ToggleOrderDialog: HomeNotesEvent()

@@ -55,7 +55,7 @@ class HomeViewModel @Inject constructor(
                 getNotes(event.noteOrder)
 
             }
-            is HomeNotesEvent.DeleteNote -> {
+            is HomeNotesEvent.DeleteNotes -> {
                 viewModelScope.launch {
                     noteUseCases.deleteNotes(_state.value.notesToBeDeleted)
                     recentlyDeletedNote = _state.value.notesToBeDeleted
