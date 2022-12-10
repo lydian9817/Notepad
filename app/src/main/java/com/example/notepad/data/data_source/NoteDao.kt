@@ -11,7 +11,7 @@ interface NoteDao {
     suspend fun insert(item: Note)
 
     @Delete
-    suspend fun delete(item: Note)
+    suspend fun delete(item: List<Note>)
 
     @Query("SELECT * from note_table WHERE id = :id")
     suspend fun getNoteById(id: Int): Note?

@@ -29,7 +29,7 @@ class HomeViewModel @Inject constructor(
     val state: State<HomeState> = _state
 
     //The recently deleted note reference, in order to restore it
-    private var recentlyDeletedNote: Note? = null
+    private var recentlyDeletedNote: MutableList<Note>? = null
 
     //Coroutine job
     private var getNotesJob: Job? = null
@@ -57,14 +57,16 @@ class HomeViewModel @Inject constructor(
             }
             is HomeNotesEvent.DeleteNote -> {
                 viewModelScope.launch {
-                    noteUseCases.deleteNote(event.note)
-                    recentlyDeletedNote = event.note
+                    noteUseCases.deleteNotes(_state.value.notesToBeDeleted)
+                    recentlyDeletedNote = _state.value.notesToBeDeleted
                 }
             }
             is HomeNotesEvent.RestoreNote -> {
                 viewModelScope.launch {
-                    noteUseCases.addNote(recentlyDeletedNote ?: return@launch)
-                    recentlyDeletedNote = null
+                    _state.value.notesToBeDeleted.forEach {
+                        noteUseCases.addNote(it)
+                        recentlyDeletedNote = null
+                    }
                 }
             }
             is HomeNotesEvent.ToggleOrderDialog -> {

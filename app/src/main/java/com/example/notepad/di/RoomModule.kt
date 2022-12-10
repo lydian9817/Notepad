@@ -35,7 +35,7 @@ object RoomModule {
     fun provideNoteUseCases(repository: NoteRepository): NoteUseCases {
         return NoteUseCases(
             getNotes = GetNotes(repository),
-            deleteNote = DeleteNote(repository),
+            deleteNotes = DeleteNotes(repository),
             addNote = AddNote(repository),
             getNote = GetNote(repository)
         )
