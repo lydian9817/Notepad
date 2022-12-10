@@ -2,15 +2,14 @@ package com.example.notepad.presentation.home
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.notepad.domain.model.Note
 import com.example.notepad.domain.use_cases.NoteUseCases
 import com.example.notepad.domain.util.NoteOrder
 import com.example.notepad.domain.util.OrderType
-import com.example.notepad.presentation.notes.HomeNotesEvent
 import com.example.notepad.presentation.home.state.HomeState
+import com.example.notepad.presentation.notes.HomeNotesEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.launchIn
@@ -84,9 +83,10 @@ class HomeViewModel @Inject constructor(
                 _state.value = state.value.copy(
                     isNoteSelectionActivated = !state.value.isNoteSelectionActivated
                 )
+                _state.value.notesToBeDeleted.clear()
             }
             is HomeNotesEvent.SelectOrUnselectNote -> {
-                if (state.value.notesToBeDeleted.contains(event.note)) {
+                if (_state.value.notesToBeDeleted.contains(event.note)) {
                     _state.value.notesToBeDeleted.remove(event.note)
                 } else {
                     _state.value.notesToBeDeleted.add(event.note)
@@ -105,13 +105,5 @@ class HomeViewModel @Inject constructor(
                 notes = notes, noteOrder = noteOrder
             )
         }.launchIn(viewModelScope)
-    }
-
-    fun changeCircleColor(note: Note): Color {
-        return if (_state.value.notesToBeDeleted.contains(note)) {
-            Color.Red
-        } else {
-            Color.Gray
-        }
     }
 }
