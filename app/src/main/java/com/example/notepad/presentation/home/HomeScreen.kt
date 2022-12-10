@@ -37,7 +37,8 @@ fun HomeScreen(
                                 viewModel.onEvent(HomeNotesEvent.RestoreNote)
                             }
                         }
-                    }
+                    },
+                    enableButton = state.notesToBeDeleted.isNotEmpty()
                 )
             } else {
                 AppBar(

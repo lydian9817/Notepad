@@ -14,7 +14,8 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun SelectedNoteAppBar(
     onCloseClick: () -> Unit,
-    onDeleteClick: () -> Unit
+    onDeleteClick: () -> Unit,
+    enableButton: Boolean
 ) {
     TopAppBar(
         navigationIcon = {
@@ -32,7 +33,10 @@ fun SelectedNoteAppBar(
             Text("Selected")
         },
         actions = {
-            IconButton(onClick = onDeleteClick) {
+            IconButton(
+                onClick = onDeleteClick,
+                enabled = enableButton
+            ) {
                 Icon(
                     imageVector = Icons.Rounded.Delete,
                     contentDescription = "Delete Selected notes",
