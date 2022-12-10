@@ -17,7 +17,7 @@ fun NoteList(
     notes: List<Note>,
     onNoteClick: (Int) -> Unit = {},
     onSelectNote: (Note) -> Unit,
-    onLongClick: () -> Unit,
+    onLongClick: (Note) -> Unit,
     isNoteSelectionActivated: Boolean,
     isNoteSelected: (Note) -> Boolean
 ) {
@@ -38,7 +38,7 @@ fun NoteList(
                                 onNoteClick(note.id!!)
                             }
                         },
-                        onLongClick = onLongClick
+                        onLongClick = { onLongClick(note) }
                     )
             ) {
                 if (isNoteSelectionActivated) {

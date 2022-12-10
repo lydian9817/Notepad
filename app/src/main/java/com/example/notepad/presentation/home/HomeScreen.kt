@@ -68,7 +68,10 @@ fun HomeScreen(
                 onSelectNote = { note ->
                     viewModel.onEvent(HomeNotesEvent.SelectOrUnselectNote(note))
                 },
-                onLongClick = { viewModel.onEvent(HomeNotesEvent.ToggleNoteSelection) },
+                onLongClick = { note ->
+                    viewModel.onEvent(HomeNotesEvent.ToggleNoteSelection)
+                    state.notesToBeDeleted.add(note)
+                              },
                 isNoteSelectionActivated = state.isNoteSelectionActivated,
                 isNoteSelected = { note ->
                     state.notesToBeDeleted.contains(note)
