@@ -67,6 +67,7 @@ class HomeViewModel @Inject constructor(
                         noteUseCases.addNote(it)
                         recentlyDeletedNote = null
                     }
+                    _state.value.notesToBeDeleted.clear()
                 }
             }
             is HomeNotesEvent.ToggleOrderDialog -> {

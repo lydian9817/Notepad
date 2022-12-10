@@ -4,11 +4,10 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Delete
-import androidx.compose.material3.*
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
@@ -18,7 +17,6 @@ import com.example.notepad.domain.model.Note
 @Composable
 fun NoteItem(
     note: Note,
-    onDelete: (Note) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Surface(
@@ -40,15 +38,6 @@ fun NoteItem(
                 text = note.noteContent,
                 style = MaterialTheme.typography.bodyMedium
             )
-            IconButton(
-                onClick = { onDelete(note) },
-                modifier = Modifier.align(Alignment.CenterHorizontally)
-            ) {
-                Icon(
-                    imageVector = Icons.Rounded.Delete,
-                    contentDescription = "delete note"
-                )
-            }
         }
     }
 }

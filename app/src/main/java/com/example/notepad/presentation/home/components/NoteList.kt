@@ -17,7 +17,6 @@ fun NoteList(
     notes: List<Note>,
     onNoteClick: (Int) -> Unit = {},
     onSelectNote: (Note) -> Unit,
-    onDelete: (Note) -> Unit = {},
     onLongClick: () -> Unit,
     isNoteSelectionActivated: Boolean,
     isNoteSelected: (Note) -> Boolean
@@ -50,7 +49,6 @@ fun NoteList(
                 }
                 NoteItem(
                     note = note,
-                    onDelete = onDelete,
                     modifier = Modifier
                 )
             }

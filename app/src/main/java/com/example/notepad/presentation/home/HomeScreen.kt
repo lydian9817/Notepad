@@ -25,7 +25,19 @@ fun HomeScreen(
         topBar = {
             if (state.isNoteSelectionActivated) {
                 SelectedNoteAppBar(
-                    onCloseClick = { viewModel.onEvent(HomeNotesEvent.ToggleNoteSelection) }
+                    onCloseClick = { viewModel.onEvent(HomeNotesEvent.ToggleNoteSelection) },
+                    onDeleteClick = {
+                        viewModel.onEvent(HomeNotesEvent.DeleteNotes(state.notesToBeDeleted))
+                        scope.launch {
+                            val result = snackbarHostState.showSnackbar(
+                                message = "Note Deleted",
+                                actionLabel = "Undo"
+                            )
+                            if (result == SnackbarResult.ActionPerformed) {
+                                viewModel.onEvent(HomeNotesEvent.RestoreNote)
+                            }
+                        }
+                    }
                 )
             } else {
                 AppBar(
@@ -55,19 +67,6 @@ fun HomeScreen(
                 onSelectNote = { note ->
                     viewModel.onEvent(HomeNotesEvent.SelectOrUnselectNote(note))
                 },
-                onDelete = { note ->
-                    viewModel.onEvent(HomeNotesEvent.DeleteNote(note))
-                    //Snack bars should be launched from a coroutine
-                    scope.launch {
-                        val result = snackbarHostState.showSnackbar(
-                            message = "Note Deleted",
-                            actionLabel = "Undo"
-                        )
-                        if (result == SnackbarResult.ActionPerformed) {
-                            viewModel.onEvent(HomeNotesEvent.RestoreNote)
-                        }
-                    }
-                },
                 onLongClick = { viewModel.onEvent(HomeNotesEvent.ToggleNoteSelection) },
                 isNoteSelectionActivated = state.isNoteSelectionActivated,
                 isNoteSelected = { note ->
@@ -75,7 +74,6 @@ fun HomeScreen(
                 }
             )
         }
-
         if (state.isOrderDialogVisible) {
             OrderDialog(
                 updateShowDialog = { viewModel.onEvent(HomeNotesEvent.ToggleOrderDialog) },
