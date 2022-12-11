@@ -1,5 +1,6 @@
 package com.example.notepad.presentation.home
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -20,6 +21,11 @@ fun HomeScreen(
     val state = viewModel.state.value
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
+
+    BackHandler(
+        enabled = state.isNoteSelectionActivated,
+        onBack = { viewModel.onEvent(HomeNotesEvent.ToggleNoteSelection) }
+    )
 
     Scaffold(
         topBar = {
