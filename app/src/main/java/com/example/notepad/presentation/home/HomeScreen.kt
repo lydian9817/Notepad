@@ -53,7 +53,10 @@ fun HomeScreen(
             }
         },
         floatingActionButton = {
-            HomeFloatingActionButton(onClickAdd = onClickAddNote)
+            HomeFloatingActionButton(
+                onClickAdd = onClickAddNote,
+                visible = state.isNoteSelectionActivated
+            )
         },
         snackbarHost = { SnackbarHost(snackbarHostState) }
     ) { padding ->
