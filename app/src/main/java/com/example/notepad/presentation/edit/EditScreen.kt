@@ -11,6 +11,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.notepad.presentation.edit.components.AppBar
 import com.example.notepad.presentation.edit.components.HintTextField
 import kotlinx.coroutines.flow.collectLatest
 
@@ -94,24 +95,4 @@ fun EditScreen(
             )
         }
     }
-}
-
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun AppBar(onClickBackButton:  () -> Unit) {
-    TopAppBar(
-        navigationIcon = {
-            IconButton(onClick = onClickBackButton) {
-                Icon(
-                    imageVector = Icons.Rounded.ArrowBack,
-                    contentDescription = "",
-                    modifier = Modifier.padding(horizontal = 12.dp)
-                )
-            }
-        },
-        title = {
-            Text("Edit Screen") //TODO poner la pantalla actual como string
-        }
-    )
 }
