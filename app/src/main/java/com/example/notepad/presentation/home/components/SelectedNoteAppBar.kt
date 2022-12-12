@@ -25,7 +25,7 @@ fun SelectedNoteAppBar(
             IconButton(onClick = onCloseClick) {
                 Icon(
                     imageVector = Icons.Rounded.Close,
-                    contentDescription = "navigation icon",
+                    contentDescription = stringResource(R.string.select_appbar_close_note_selection),
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(horizontal = 4.dp)
@@ -42,7 +42,7 @@ fun SelectedNoteAppBar(
             ) {
                 Icon(
                     imageVector = Icons.Rounded.Delete,
-                    contentDescription = "Delete Selected notes",
+                    contentDescription = stringResource(R.string.select_appbar_delete_notes),
                     modifier = Modifier.padding(horizontal = 12.dp)
                 )
             }
