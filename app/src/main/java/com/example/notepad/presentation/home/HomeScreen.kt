@@ -1,6 +1,7 @@
 package com.example.notepad.presentation.home
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -29,33 +30,40 @@ fun HomeScreen(
 
     Scaffold(
         topBar = {
-            if (state.isNoteSelectionActivated) {
-                SelectedNoteAppBar(
-                    onCloseClick = { viewModel.onEvent(HomeNotesEvent.ToggleNoteSelection) },
-                    onDeleteClick = {
-                        viewModel.onEvent(HomeNotesEvent.DeleteNotes(state.notesToBeDeleted))
-                        scope.launch {
-                            val result = snackbarHostState.showSnackbar(
-                                message = "Note Deleted",
-                                actionLabel = "Undo"
-                            )
-                            if (result == SnackbarResult.ActionPerformed) {
-                                viewModel.onEvent(HomeNotesEvent.RestoreNote)
-                            }
-                        }
-                    },
-                    enableButton = state.notesToBeDeleted.isNotEmpty()
-                )
-            } else {
-                AppBar(
-                    isMenuOpen = state.isDropdownMenuOpen,
-                    updateShowMenu = {
-                        viewModel.onEvent(HomeNotesEvent.ToggleDropdownMenu)
-                    },
-                    updateShowDialog = {
-                        viewModel.onEvent(HomeNotesEvent.ToggleOrderDialog)
+            Crossfade(
+                targetState = state.isNoteSelectionActivated
+            ) {
+                when (it) {
+                    true -> {
+                        SelectedNoteAppBar(
+                            onCloseClick = { viewModel.onEvent(HomeNotesEvent.ToggleNoteSelection) },
+                            onDeleteClick = {
+                                viewModel.onEvent(HomeNotesEvent.DeleteNotes(state.notesToBeDeleted))
+                                scope.launch {
+                                    val result = snackbarHostState.showSnackbar(
+                                        message = "Note Deleted",
+                                        actionLabel = "Undo"
+                                    )
+                                    if (result == SnackbarResult.ActionPerformed) {
+                                        viewModel.onEvent(HomeNotesEvent.RestoreNote)
+                                    }
+                                }
+                            },
+                            enableButton = state.notesToBeDeleted.isNotEmpty()
+                        )
                     }
-                )
+                    else -> {
+                        AppBar(
+                            isMenuOpen = state.isDropdownMenuOpen,
+                            updateShowMenu = {
+                                viewModel.onEvent(HomeNotesEvent.ToggleDropdownMenu)
+                            },
+                            updateShowDialog = {
+                                viewModel.onEvent(HomeNotesEvent.ToggleOrderDialog)
+                            }
+                        )
+                    }
+                }
             }
         },
         floatingActionButton = {
@@ -80,7 +88,7 @@ fun HomeScreen(
                 onLongClick = { note ->
                     viewModel.onEvent(HomeNotesEvent.ToggleNoteSelection)
                     state.notesToBeDeleted.add(note)
-                              },
+                },
                 isNoteSelectionActivated = state.isNoteSelectionActivated,
                 isNoteSelected = { note ->
                     state.notesToBeDeleted.contains(note)
