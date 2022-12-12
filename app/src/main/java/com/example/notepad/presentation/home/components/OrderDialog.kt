@@ -6,8 +6,10 @@ import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
+import com.example.notepad.R
 import com.example.notepad.domain.util.NoteOrder
 import com.example.notepad.domain.util.OrderType
 import com.example.notepad.ui.theme.Shapes
@@ -25,14 +27,14 @@ fun OrderDialog(
             TextButton(
                 onClick = {  onOrderChange(selectedOrder) },
             ) {
-                Text(text = "Confirm")
+                Text(text = stringResource(R.string.sort_by_dialog_confirm))
             }
         },
         dismissButton = {
             TextButton(
                 onClick = updateShowDialog,
             ) {
-                Text(text = "Cancel")
+                Text(text = stringResource(R.string.sort_by_dialog_cancel))
             }
         },
         text = {
@@ -40,11 +42,11 @@ fun OrderDialog(
                 shape = Shapes.medium
             ) {
                 Column {
-                    Text(text = "Sort by")
+                    Text(text = stringResource(R.string.sort_by_dialog_sort_by_text))
                     Spacer(modifier = Modifier.height(8.dp))
                     Column(Modifier.selectableGroup()) {
                         DefaultRadioButton(
-                            text = "Title",
+                            text = stringResource(R.string.sort_by_dialog_title_text),
                             selected = selectedOrder is NoteOrder.Title,
                             onSelect = {
                                 selectedOrder = NoteOrder.Title(selectedOrder.orderType)
@@ -52,7 +54,7 @@ fun OrderDialog(
                             }
                         )
                         DefaultRadioButton(
-                            text = "Date",
+                            text = stringResource(R.string.sort_by_dialog_date_text),
                             selected = selectedOrder is NoteOrder.Date,
                             onSelect = {
                                 selectedOrder = NoteOrder.Date(selectedOrder.orderType)
@@ -61,16 +63,16 @@ fun OrderDialog(
                         )
                     }
 
-                    Text(text = "Order")
+                    Text(text = stringResource(R.string.sort_by_dialog_order_text))
                     Spacer(modifier = Modifier.height(8.dp))
                     Column(Modifier.selectableGroup()) {
                         DefaultRadioButton(
-                            text = "Ascending",
+                            text = stringResource(R.string.sort_by_dialog_ascending_text),
                             selected = selectedOrder.orderType is OrderType.Ascending,
                             onSelect = { selectedOrder = selectedOrder.copy(OrderType.Ascending) }
                         )
                         DefaultRadioButton(
-                            text = "Descending",
+                            text = stringResource(R.string.sort_by_dialog_descending_text),
                             selected = selectedOrder.orderType is OrderType.Descending,
                             onSelect = { selectedOrder = selectedOrder.copy(OrderType.Descending) }
                         )

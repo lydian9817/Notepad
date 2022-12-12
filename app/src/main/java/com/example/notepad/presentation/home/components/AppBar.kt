@@ -7,7 +7,9 @@ import androidx.compose.material.icons.rounded.MoreVert
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.example.notepad.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -21,19 +23,19 @@ fun AppBar(
             IconButton(onClick = { /*TODO*/ }) {
                 Icon(
                     imageVector = Icons.Rounded.Menu,
-                    contentDescription = "navigation icon",
+                    contentDescription = stringResource(R.string.home_navigation_icon),
                     modifier = Modifier.padding(horizontal = 12.dp)
                 )
             }
         },
         title = {
-            Text("Home Screen")
+            Text(stringResource(R.string.home_screen_appbar))
         },
         actions = {
             IconButton(onClick = updateShowMenu) {
                 Icon(
                     imageVector = Icons.Rounded.MoreVert,
-                    contentDescription = "settings icon",
+                    contentDescription = stringResource(R.string.home_settings_icon),
                     modifier = Modifier.padding(horizontal = 12.dp)
                 )
             }
@@ -44,7 +46,7 @@ fun AppBar(
             ) {
                 DropdownMenuItem(
                     onClick = updateShowDialog,
-                    text = { Text(text = "Sort by") }
+                    text = { Text(text = stringResource(R.string.home_sort_by_dm_item)) }
                 )
             }
         }

@@ -8,6 +8,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import com.example.notepad.R
 
 @Composable
 fun EmptyNoteList() {
@@ -17,7 +19,7 @@ fun EmptyNoteList() {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "Tap + to write a new note!",
+            text = stringResource(R.string.empty_list_text),
             style = MaterialTheme.typography.titleLarge,
         )
     }

@@ -9,6 +9,8 @@ import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
+import com.example.notepad.R
 
 @Composable
 fun HomeFloatingActionButton(
@@ -28,7 +30,7 @@ fun HomeFloatingActionButton(
             shape = CircleShape,
             onClick = onClickAdd
         ) {
-            Icon(Icons.Rounded.Add, contentDescription = "Add Note")
+            Icon(Icons.Rounded.Add, contentDescription = stringResource(R.string.home_fab_description))
         }
     }
 
