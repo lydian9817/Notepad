@@ -29,7 +29,7 @@ fun AppBar(
             }
         },
         title = {
-            Text(stringResource(R.string.home_screen_appbar))
+            Text(stringResource(R.string.home_screen_appbar_title))
         },
         actions = {
             IconButton(onClick = updateShowMenu) {

@@ -2,15 +2,16 @@ package com.example.notepad.presentation.edit
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.Done
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.notepad.R
 import com.example.notepad.presentation.edit.components.AppBar
 import com.example.notepad.presentation.edit.components.HintTextField
 import kotlinx.coroutines.flow.collectLatest
@@ -54,7 +55,10 @@ fun EditScreen(
                     viewModel.onEvent(EditNoteEvent.SaveNote)
                 }
             ) {
-                Icon(imageVector = Icons.Rounded.Done, contentDescription = "Save note")
+                Icon(
+                    imageVector = Icons.Rounded.Done,
+                    contentDescription = stringResource(R.string.edit_screen_save_note_button)
+                )
             }
         },
         snackbarHost = { SnackbarHost(snackbarHostState) }
