@@ -8,14 +8,17 @@ import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.example.notepad.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SelectedNoteAppBar(
     onCloseClick: () -> Unit,
     onDeleteClick: () -> Unit,
-    enableButton: Boolean
+    enableButton: Boolean,
+    count: Int
 ) {
     TopAppBar(
         navigationIcon = {
@@ -30,7 +33,7 @@ fun SelectedNoteAppBar(
             }
         },
         title = {
-            Text("Selected")
+            Text(stringResource(R.string.selected_appbar_count, count))
         },
         actions = {
             IconButton(

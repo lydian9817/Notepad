@@ -49,7 +49,8 @@ fun HomeScreen(
                                     }
                                 }
                             },
-                            enableButton = state.notesToBeDeleted.isNotEmpty()
+                            enableButton = state.notesToBeDeleted.isNotEmpty(),
+                            count = state.notesToBeDeleted.size
                         )
                     }
                     else -> {

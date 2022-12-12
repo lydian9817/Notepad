@@ -19,6 +19,7 @@
     <string name="sort_by_dialog_descending_text">Descending</string>
     <string name="select_circle_checked_description">note selected</string>
     <string name="select_circle_unchecked_description">note is not selected</string>
+    <string name="selected_appbar_count">Selected %1$d</string>
 
     <!--  -->
 </resources>
