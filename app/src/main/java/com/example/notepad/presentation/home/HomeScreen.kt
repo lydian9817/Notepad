@@ -50,7 +50,14 @@ fun HomeScreen(
                                 }
                             },
                             enableButton = state.notesToBeDeleted.isNotEmpty(),
-                            count = state.notesToBeDeleted.size
+                            count = state.notesToBeDeleted.size,
+                            updateShowMenu = {
+                                viewModel.onEvent(HomeNotesEvent.ToggleSelectionDropdownMenu)
+                            },
+                            isMenuOpen = state.isSelectionDropdownMenuOpen,
+                            onSelectAllClick = {
+
+                            }
                         )
                     }
                     else -> {
