@@ -27,4 +27,7 @@
     <string name="edit_screen_appbar_title">Edit Screen</string>
     <string name="edit_screen_back_button">Back button</string>
     <string name="edit_screen_save_note_button">Save note</string>
+    <string name="edit_screen_title_text_field_hint">Note title</string>
+    <string name="edit_screen_content_text_field_hint">Write your note here!</string>
+    <string name="edit_screen_error_message">Mmmm, we couldn´t save the note</string>
 </resources>

@@ -1,15 +1,19 @@
 package com.example.notepad.presentation.edit
 
+import android.annotation.SuppressLint
+import android.content.Context
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.notepad.R
 import com.example.notepad.domain.model.InvalidNoteException
 import com.example.notepad.domain.model.Note
 import com.example.notepad.domain.use_cases.NoteUseCases
 import com.example.notepad.presentation.edit.state.TextFieldState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
@@ -18,20 +22,21 @@ import javax.inject.Inject
 @HiltViewModel
 class EditViewModel @Inject constructor(
     private val noteUseCases: NoteUseCases,
-    savedStateHandle: SavedStateHandle
+    savedStateHandle: SavedStateHandle,
+    @SuppressLint("StaticFieldLeak") @ApplicationContext private val context: Context
 ) : ViewModel() {
 
     //Backing properties
     private val _noteTitle = mutableStateOf(
         TextFieldState(
-            hint = "Note title"
+            hint = context.getString(R.string.edit_screen_title_text_field_hint)
         )
     )
     val noteTitle: State<TextFieldState> = _noteTitle
 
     private val _noteContent = mutableStateOf(
         TextFieldState(
-            hint = "Write your note here!"
+            hint = context.getString(R.string.edit_screen_content_text_field_hint)
         )
     )
     val noteContent: State<TextFieldState> = _noteContent
@@ -103,7 +108,7 @@ class EditViewModel @Inject constructor(
                     } catch (e: InvalidNoteException) {
                         _eventFlow.emit(
                             UiEvent.ShowSnackbar(
-                                message = e.message ?: "Mmmm, we couldn´t save the note"
+                                message = e.message ?: context.getString(R.string.edit_screen_error_message)
                             )
                         )
                     }
