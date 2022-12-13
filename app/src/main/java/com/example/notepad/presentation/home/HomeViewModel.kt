@@ -95,6 +95,11 @@ class HomeViewModel @Inject constructor(
                     _state.value.notesToBeDeleted.add(event.note)
                 }
             }
+            is HomeNotesEvent.ToggleSelectionDropdownMenu -> {
+                _state.value = state.value.copy(
+                    isSelectionDropdownMenuOpen = !state.value.isSelectionDropdownMenuOpen
+                )
+            }
         }
     }
 
