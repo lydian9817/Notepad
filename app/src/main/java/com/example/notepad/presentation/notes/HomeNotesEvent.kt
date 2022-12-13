@@ -12,4 +12,5 @@ sealed class HomeNotesEvent {
     object ToggleHomeDropdownMenu: HomeNotesEvent()
     object ToggleNoteSelection: HomeNotesEvent()
     object ToggleSelectionDropdownMenu: HomeNotesEvent()
+    object SelectAllNotes: HomeNotesEvent()
 }

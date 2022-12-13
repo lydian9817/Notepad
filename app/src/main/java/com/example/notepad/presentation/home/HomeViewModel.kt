@@ -100,6 +100,10 @@ class HomeViewModel @Inject constructor(
                     isSelectionDropdownMenuOpen = !state.value.isSelectionDropdownMenuOpen
                 )
             }
+            is HomeNotesEvent.SelectAllNotes -> {
+                _state.value.notesToBeDeleted.clear()
+                _state.value.notesToBeDeleted.addAll(_state.value.notes)
+            }
         }
     }
 

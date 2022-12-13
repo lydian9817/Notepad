@@ -56,7 +56,8 @@ fun HomeScreen(
                             },
                             isMenuOpen = state.isSelectionDropdownMenuOpen,
                             onSelectAllClick = {
-
+                                viewModel.onEvent(HomeNotesEvent.SelectAllNotes)
+                                viewModel.onEvent(HomeNotesEvent.ToggleSelectionDropdownMenu)
                             }
                         )
                     }
