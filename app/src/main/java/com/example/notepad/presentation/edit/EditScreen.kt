@@ -9,6 +9,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.notepad.R
@@ -82,7 +83,11 @@ fun EditScreen(
                 textStyle = MaterialTheme.typography.headlineSmall
             )
             
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(8.dp))
+            Divider(
+                thickness = Dp.Hairline
+            )
+            Spacer(modifier = Modifier.height(8.dp))
 
             HintTextField(
                 text = contentState.text,
