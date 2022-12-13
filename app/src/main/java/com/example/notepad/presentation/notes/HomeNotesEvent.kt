@@ -9,6 +9,6 @@ sealed class HomeNotesEvent {
     data class SelectOrUnselectNote(val note: Note): HomeNotesEvent()
     object RestoreNote: HomeNotesEvent()
     object ToggleOrderDialog: HomeNotesEvent()
-    object ToggleDropdownMenu: HomeNotesEvent()
+    object ToggleHomeDropdownMenu: HomeNotesEvent()
     object ToggleNoteSelection: HomeNotesEvent()
 }

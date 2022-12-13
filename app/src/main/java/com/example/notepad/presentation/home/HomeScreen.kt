@@ -55,9 +55,9 @@ fun HomeScreen(
                     }
                     else -> {
                         AppBar(
-                            isMenuOpen = state.isDropdownMenuOpen,
+                            isMenuOpen = state.isHomeDropdownMenuOpen,
                             updateShowMenu = {
-                                viewModel.onEvent(HomeNotesEvent.ToggleDropdownMenu)
+                                viewModel.onEvent(HomeNotesEvent.ToggleHomeDropdownMenu)
                             },
                             updateShowDialog = {
                                 viewModel.onEvent(HomeNotesEvent.ToggleOrderDialog)

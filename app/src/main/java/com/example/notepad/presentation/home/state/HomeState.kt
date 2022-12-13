@@ -10,6 +10,6 @@ data class HomeState(
     val notesToBeDeleted: MutableList<Note> = mutableStateListOf(),
     val noteOrder: NoteOrder = NoteOrder.Date(OrderType.Descending), //default order
     val isOrderDialogVisible: Boolean = false,
-    val isDropdownMenuOpen: Boolean = false,
+    val isHomeDropdownMenuOpen: Boolean = false,
     val isNoteSelectionActivated: Boolean = false
 )

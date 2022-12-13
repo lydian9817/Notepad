@@ -74,12 +74,12 @@ class HomeViewModel @Inject constructor(
                 //copies the "ui side" value and invert it
                 _state.value = state.value.copy(
                     isOrderDialogVisible = !state.value.isOrderDialogVisible,
-                    isDropdownMenuOpen = false
+                    isHomeDropdownMenuOpen = false
                 )
             }
-            is HomeNotesEvent.ToggleDropdownMenu -> {
+            is HomeNotesEvent.ToggleHomeDropdownMenu -> {
                 _state.value = state.value.copy(
-                    isDropdownMenuOpen = !state.value.isDropdownMenuOpen
+                    isHomeDropdownMenuOpen = !state.value.isHomeDropdownMenuOpen
                 )
             }
             is HomeNotesEvent.ToggleNoteSelection -> {
