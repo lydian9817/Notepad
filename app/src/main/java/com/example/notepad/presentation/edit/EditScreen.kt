@@ -66,8 +66,12 @@ fun EditScreen(
     ) { padding ->
         Column(
             modifier = Modifier
+                .padding(
+                    start = 16.dp,
+                    end = 16.dp,
+                    top = padding.calculateTopPadding()
+                )
                 .fillMaxSize()
-                .padding(padding)
         ) {
             HintTextField(
                 text = titleState.text,
