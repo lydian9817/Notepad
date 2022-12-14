@@ -23,6 +23,7 @@
     <string name="select_appbar_close_note_selection">End note selection</string>
     <string name="select_appbar_delete_notes">Delete Selected notes</string>
     <string name="home_screen_selection_menu">Select all</string>
+    <string name="home_select_notes_dm_item">Select notes</string>
 
     <!-- Edit Screen -->
     <string name="edit_screen_appbar_title">Edit Screen</string>
@@ -31,6 +32,6 @@
     <string name="edit_screen_title_text_field_hint">Note title</string>
     <string name="edit_screen_content_text_field_hint">Write your note here!</string>
     <string name="edit_screen_error_message">Mmmm, we couldn´t save the note</string>
-    <string name="home_select_notes_dm_item">Select notes</string>
+
 
 </resources>
