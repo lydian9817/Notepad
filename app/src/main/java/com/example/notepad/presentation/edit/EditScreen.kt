@@ -89,7 +89,8 @@ fun EditScreen(
             
             Spacer(modifier = Modifier.height(8.dp))
             Divider(
-                thickness = Dp.Hairline
+                thickness = Dp.Hairline,
+                modifier = Modifier.fillMaxWidth()
             )
             Spacer(modifier = Modifier.height(8.dp))
 
