@@ -101,8 +101,12 @@ class HomeViewModel @Inject constructor(
                 )
             }
             is HomeNotesEvent.SelectAllNotes -> {
-                _state.value.notesToBeDeleted.clear()
-                _state.value.notesToBeDeleted.addAll(_state.value.notes)
+                if (_state.value.notesToBeDeleted.containsAll(_state.value.notes)){
+                    _state.value.notesToBeDeleted.clear()
+                } else {
+                    _state.value.notesToBeDeleted.clear()
+                    _state.value.notesToBeDeleted.addAll(_state.value.notes)
+                }
             }
         }
     }
