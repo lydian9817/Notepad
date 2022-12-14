@@ -16,7 +16,8 @@ import com.example.notepad.R
 fun AppBar(
     updateShowMenu: () -> Unit,
     isMenuOpen: Boolean,
-    updateShowDialog: () -> Unit
+    updateShowDialog: () -> Unit,
+    updateNoteSelection: () -> Unit
 ) {
     TopAppBar(
         navigationIcon = {
@@ -44,6 +45,10 @@ fun AppBar(
                 onDismissRequest = updateShowMenu,
                 modifier = Modifier.padding(5.dp)
             ) {
+                DropdownMenuItem(
+                    onClick = updateNoteSelection,
+                    text = { Text(text = stringResource(R.string.home_select_notes_dm_item)) }
+                )
                 DropdownMenuItem(
                     onClick = updateShowDialog,
                     text = { Text(text = stringResource(R.string.home_sort_by_dm_item)) }

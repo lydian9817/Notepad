@@ -69,6 +69,10 @@ fun HomeScreen(
                             },
                             updateShowDialog = {
                                 viewModel.onEvent(HomeNotesEvent.ToggleOrderDialog)
+                            },
+                            updateNoteSelection = {
+                                viewModel.onEvent(HomeNotesEvent.ToggleNoteSelection)
+                                viewModel.onEvent(HomeNotesEvent.ToggleHomeDropdownMenu)
                             }
                         )
                     }
