@@ -60,7 +60,8 @@ fun NoteList(
                     modifier = Modifier.align(Alignment.CenterVertically)
                 ) {
                     SelectCircle(
-                        isNoteSelected = isNoteSelected(note)
+                        isNoteSelected = isNoteSelected(note),
+                        onClick = { onSelectNote(note) }
                     )
 
                 }
