@@ -30,18 +30,13 @@ fun NoteList(
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .padding(scaffoldPadding)
+            .padding(
+                top = scaffoldPadding.calculateTopPadding()
+            )
     ) {
         items(notes) { note ->
             Row(
                 modifier = Modifier
-                    .padding(start = 12.dp, end = 12.dp)
-                    .border(
-                        border = BorderStroke(
-                            width = Dp.Hairline,
-                            color = Color.Black
-                        )
-                    )
                     .combinedClickable(
                         onClick = {
                             if (isNoteSelectionActivated) {
@@ -52,6 +47,13 @@ fun NoteList(
                         },
                         onLongClick = { onLongClick(note) }
                     )
+                    .border(
+                        border = BorderStroke(
+                            width = Dp.Hairline,
+                            color = Color.Black
+                        )
+                    )
+                    .padding(start = 8.dp, end = 8.dp)
             ) {
                 AnimatedVisibility(
                     visible = isNoteSelectionActivated,
@@ -60,7 +62,7 @@ fun NoteList(
                     SelectCircle(
                         isNoteSelected = isNoteSelected(note)
                     )
-                    Spacer(modifier = Modifier.width(16.dp))
+
                 }
                 NoteItem(
                     note = note,
