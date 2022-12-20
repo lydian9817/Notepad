@@ -1,6 +1,7 @@
 package com.example.notepad.presentation.edit
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Done
 import androidx.compose.material3.*
@@ -52,6 +53,7 @@ fun EditScreen(
         ) },
         floatingActionButton = {
             FloatingActionButton(
+                shape = RoundedCornerShape(16.dp),
                 onClick = {
                     viewModel.onEvent(EditNoteEvent.SaveNote)
                 }
