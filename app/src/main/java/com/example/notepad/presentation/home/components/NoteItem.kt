@@ -26,7 +26,8 @@ fun NoteItem(
         )
         Text(
             text = note.noteContent,
-            style = MaterialTheme.typography.bodyMedium
+            style = MaterialTheme.typography.bodyMedium,
+            maxLines = 6
         )
     }
 }
