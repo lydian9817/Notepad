@@ -71,6 +71,8 @@ dependencies {
     implementation "androidx.hilt:hilt-navigation-compose:1.0.0"
     //material3
     implementation "androidx.compose.material3:material3:1.0.1"
+    //DataStore preferences
+    implementation"androidx.datastore:datastore-preferences:1.0.0"
 
 
 
