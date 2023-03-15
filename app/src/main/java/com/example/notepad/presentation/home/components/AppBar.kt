@@ -17,7 +17,8 @@ fun AppBar(
     updateShowMenu: () -> Unit,
     isMenuOpen: Boolean,
     updateShowDialog: () -> Unit,
-    updateNoteSelection: () -> Unit
+    updateNoteSelection: () -> Unit,
+    goToSettingScreen: () -> Unit
 ) {
     TopAppBar(
         navigationIcon = {
@@ -52,6 +53,10 @@ fun AppBar(
                 DropdownMenuItem(
                     onClick = updateShowDialog,
                     text = { Text(text = stringResource(R.string.home_sort_by_dm_item)) }
+                )
+                DropdownMenuItem(
+                    onClick = goToSettingScreen,
+                    text = { Text(text = stringResource(R.string.home_settings_dm_item)) }
                 )
             }
         }

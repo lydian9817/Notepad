@@ -17,6 +17,7 @@ import kotlinx.coroutines.launch
 fun HomeScreen(
     onClickAddNote: () -> Unit = {},
     onNoteClick: (Int) -> Unit = {},
+    goToSettingsScreen: () -> Unit,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     val state = viewModel.state.value
@@ -72,6 +73,10 @@ fun HomeScreen(
                             },
                             updateNoteSelection = {
                                 viewModel.onEvent(HomeNotesEvent.ToggleNoteSelection)
+                                viewModel.onEvent(HomeNotesEvent.ToggleHomeDropdownMenu)
+                            },
+                            goToSettingScreen = {
+                                goToSettingsScreen()
                                 viewModel.onEvent(HomeNotesEvent.ToggleHomeDropdownMenu)
                             }
                         )

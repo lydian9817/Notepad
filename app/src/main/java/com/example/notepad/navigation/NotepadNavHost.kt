@@ -8,6 +8,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.notepad.presentation.edit.EditScreen
 import com.example.notepad.presentation.home.HomeScreen
+import com.example.notepad.presentation.settings.SettingsScreen
 import com.example.notepad.presentation.util.Screen
 
 @Composable
@@ -26,6 +27,9 @@ fun NotepadNavHost(navController: NavHostController) {
                         Screen.EditScreen.route +
                                 "?noteId=$id"
                     )
+                },
+                goToSettingsScreen = {
+                    navController.navigate(Screen.SettingsScreen.route)
                 }
             )
         }
@@ -47,6 +51,16 @@ fun NotepadNavHost(navController: NavHostController) {
                     navController.navigateUp()
                 },
                 onClickBackButton = {
+                    navController.navigateUp()
+                }
+            )
+        }
+
+        composable(
+            route = Screen.SettingsScreen.route
+        ) {
+            SettingsScreen(
+                onGoBackClick = {
                     navController.navigateUp()
                 }
             )
