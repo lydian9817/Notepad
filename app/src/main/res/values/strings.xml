@@ -36,5 +36,6 @@
 
     <!-- Settings Screen -->
     <string name="settings_screen_dark_mode">Dark mode</string>
+    <string name="settings_screen_appbar_title">Settings Screen</string>
 
 </resources>
