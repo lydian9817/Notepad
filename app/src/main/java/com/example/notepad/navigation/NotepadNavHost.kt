@@ -9,14 +9,23 @@ import androidx.navigation.navArgument
 import com.example.notepad.presentation.edit.EditScreen
 import com.example.notepad.presentation.home.HomeScreen
 import com.example.notepad.presentation.settings.SettingsScreen
+import com.example.notepad.presentation.splash.SplashScreen
 import com.example.notepad.presentation.util.Screen
 
 @Composable
 fun NotepadNavHost(navController: NavHostController) {
     NavHost(
         navController = navController,
-        startDestination = Screen.HomeScreen.route
+        startDestination = Screen.SplashScreen.route
     ) {
+        composable(route = Screen.SplashScreen.route) {
+            SplashScreen(
+                goToHomeScreen = {
+                    navController.navigate(Screen.HomeScreen.route)
+                }
+            )
+        }
+
         composable(route = Screen.HomeScreen.route) {
             HomeScreen(
                 onClickAddNote = {
