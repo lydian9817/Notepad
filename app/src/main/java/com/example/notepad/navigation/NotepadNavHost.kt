@@ -21,7 +21,9 @@ fun NotepadNavHost(navController: NavHostController) {
         composable(route = Screen.SplashScreen.route) {
             SplashScreen(
                 goToHomeScreen = {
-                    navController.navigate(Screen.HomeScreen.route)
+                    navController.navigate(Screen.HomeScreen.route) {
+                        popUpTo(Screen.SplashScreen.route) { inclusive = true }
+                    }
                 }
             )
         }
