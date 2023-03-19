@@ -46,6 +46,12 @@ fun SettingsScreen(
                 checked = preferences.value.darkMode,
                 text = stringResource(R.string.settings_screen_dark_mode)
             )
+
+            BooleanOptionItem(
+                onClick = { /*TODO*/ },
+                checked = false,
+                text = "Secure app"
+            )
         }
     }
 }
